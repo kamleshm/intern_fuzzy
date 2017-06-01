@@ -1,0 +1,26 @@
+2.5 test not present(no table output in manual)..same with 7.* but test are present
+2.6 value not matching
+*************************************************************************
+3.8 FLFirstLast ..wrong result in manual
+*************************************************************************
+4.12 output is lowercase but in manual it is uppercase 115
+*************************************************************************
+7.1  	tblsimuncorr,tblsimcorr,tblcholesky donot exist and was created 221
+		not solution found from teradata
+		tblcorrel donot exist		
+7.2 	-do-
+7.3 	-do-
+*************************************************************************
+8.1 FLMLEBinomialUdt .. wrong result(although random is used) 230
+8.2 FLMLEChiSqUdt -do- 232
+8.3 FLMLEExpUdt ..wrong result(although random is used),table cropped in manual ..234
+8.4 FLMLENormalUdt .. wrong result(although random is used) 236
+8.5 FLMLEPoissonUdt -do- 238
+8.6 FLMLEWeibullUdt -do- ,table cropped, 240
+8.7 FLMLEStudentsTUdt ..no result while executing command
+*************************************************************************
+9.6 ..wrong table in manual(expected transpose column)tblmatrix do not exist 
+	  tblmatrixmulti is used with matrix_id=5   .. 256
+9.7 ..tblmatrixresult do not exist and was created 
+	  tblmatrix do not exist so tblmatrixmulti is used with id=5..257
+

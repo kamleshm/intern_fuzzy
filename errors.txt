@@ -1,0 +1,43 @@
+2.2.1 FLSparseCorrel 64 .. a.value not found 
+2.2.2 FLSparseCovar 65 -do-
+2.2.3 FLSparseKurtosis 68 -do-
+2.2.4 FLSparseMean 70 -do-
+2.2.5 FLSparseSkewness 71 -do-
+2.2.6 FLSparseStdDev 72 -do-
+2.2.7 FLSparseVar 73 -do-
+2.2.8 FLSparseVarP 74 -do-
+2.5.1 table tblentity,tblEntityRank not present 82
+2.5.3 tblPercCalcStg,tblGroupSummary,tblPercParams are not present 86
+2.5.4 tblGroupSummary not present 87
+2.6 result does not match 88
+
+3.1 FLCollapseDates  ..format does not match(00:00) 90
+3.5 FLDatePart ...year format has comma in manual .. 96
+3.7 FLDecodeDates .. wrong value at 31st row in manual ..98
+3.8 FLFirstLast .. extra 00:00:00 in manual ..99
+				.. value does not match ..101 
+				
+4.12 output is lowercase but in manual it is uppercase 115
+
+5.2.28 FLInvCDFStudentsT ..semicolon missing in query 180
+
+7.1 to 7.3 tblsimuncorr,tblsimuncorr,tblcholesky donot exist 221
+
+8.1 FLMLEBinomialUdt .. wrong result(although random is used) 230
+8.2 FLMLEChiSqUdt -do- 232
+8.3 FLMLEExpUdt ..wrong result(although random is used),table cropped in manual ..234
+8.4 FLMLENormalUdt .. wrong result(although random is used) 236
+8.5 FLMLEPoissonUdt -do- 238
+8.6 FLMLEWeibullUdt -do- ,table cropped, 240
+8.7 FLMLEStudentsTUdt ..no result while executing command
+
+
+9.1 to 9.5  .. a.row not found 246
+9.6 ..tblmatrix do not exist 256
+9.7 .. tblmatrixresult do not exist 257
+9.8.1 .. a.row not found 259
+9.8.2 FLEigenValueStr .. tblmatrixresult do not exist ,a.row not found ..261
+9.8.3 FLEigenVector .. a.row do not exist 264
+9.8.4 -do-
+9.8.6 FLEigenSystemStr .. a.row do not exist 273
+

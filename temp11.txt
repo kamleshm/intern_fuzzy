@@ -1,0 +1,143 @@
+CREATE OR REPLACE VIEW vw_LinRegrMulti AS
+SELECT 1 AS DataSetID,
+a.ObsID,
+a.VarID,
+a.Num_val as value
+FROM tblLinRegr a
+WHERE a.VarID <= 50 AND a.ObsID <= 2000
+UNION
+SELECT 2 AS DataSetID, a.*
+FROM tblLinRegr a
+WHERE a.VarID <= 50 AND a.ObsID <= 3000;
+
+\o foo.out  
+CALL SP_LinRegrMultiDataSet('vw_LinRegrMulti', 'Test LinRegrMultiData');
+\o
+\! cat foo.out
+DROP VIEW vw_LinRegrMulti;
+\! grep "Analysis" foo.out | cut -d " " -f 7 > new
+create table analysis(col1 varchar(50));
+insert into analysis select * from external '/export/home/nz/new';
+
+SELECT a.*
+FROM fzzlLinRegrCoeffs a
+WHERE a.AnalysisID = (select * from analysis)
+ORDER BY 3, 1, 2;
+
+drop table analysis;
+\!rm -f foo.out new
+
+CREATE TABLE TBLSIMUNCORR
+(
+TRAILID INTEGER,
+DRAWID DOUBLE,
+SERIESID DOUBLE,
+SIMVALUE DOUBLE
+);
+
+CREATE TABLE TBLCHOLESKY
+(
+ROW INTEGER,
+COL INTEGER,
+VALUE DOUBLE
+);
+
+CREATE TABLE TBLSIMCORR
+(
+TRAILID INTEGER,
+DRAWID DOUBLE,
+SERIESID DOUBLE,
+SIMVALUE DOUBLE
+);
+
+CREATE TABLE TBLINVGAMMA
+(
+TRAILID INTEGER,
+DRAWID DOUBLE,
+SIMVALUE DOUBLE
+);
+
+SELECT a.Col_ID AS Row,
+a.Row_ID As Col,
+a.Cell_Val AS Transpose
+FROM tblMatrixMulti a
+WHERE a.Matrix_ID=5
+ORDER BY 1, 2;
+
+CREATE TABLE TBLMATRIXRESULT
+(
+ROW_ID INTEGER,
+COL_ID INTEGER,
+CELL_VAL INTEGER
+);
+
+9.7
+TRUNCATE TABLE tblMatrixResult;
+INSERT INTO tblMatrixResult
+SELECT a.Row_ID,
+a.Col_ID,
+FLMatrixInv(a.Row_ID, a.Col_ID, a.CELL_VAL)
+OVER (PARTITION BY 1) AS Inverse
+FROM tblMatrixMulti a
+WHERE a.Matrix_ID=5
+ORDER BY 1, 2;
+SELECT a.Row_ID,
+b.Col_ID,
+FLSumProd(a.CELL_VAL, b.CELL_VAL) AS Product
+FROM tblMatrixResult a,
+tblMatrixMulti b 
+WHERE a.Col_ID = b.Row_ID
+AND b.Matrix_ID=5
+GROUP BY a.Row_ID, b.Col_ID
+ORDER BY 1, 2;
+
+9.8.1
+SELECT FLEigenValueStr(a.Row_ID,
+a.Col_ID,
+a.CELL_VAL)
+OVER (PARTITION BY 1)
+FROM tblMatrixMulti a
+WHERE a.Matrix_ID = 5;
+
+8.7
+CREATE VIEW stw AS
+SELECT vw.GroupID,
+vw.NumVal,
+NVL(LAG(0) OVER (PARTITION BY vw.GroupID ORDER BY
+vw.GroupID), 1) AS begin_flag,
+NVL(LEAD(0) OVER (PARTITION BY vw.GroupID ORDER BY
+vw.GroupID), 1) AS end_flag
+FROM (
+SELECT 1 AS GroupID,
+FLSimStudentsT(a.RandVal, 0, 1, 35.6895) AS NumVal
+FROM fzzlSerial a
+WHERE a.SerialVal <= 1000
+) AS vw;
+
+SELECT a.*
+FROM
+TABLE (FLMLEStudentsTUdt(stw.GroupID,
+stw.NumVal,
+stw.begin_flag,
+stw.end_flag)) AS a;
+DROP VIEW view_studentst_1000;
+
+
+CREATE VIEW view_studentst_1000 AS
+SELECT 1 AS GroupID,
+FLSimStudentsT(a.RandVal, 0, 1, 35.6895) AS NumVal
+FROM fzzlSerial a
+WHERE a.SerialVal <= 1000;
+SELECT a.*
+FROM
+TABLE (FLMLEStudentsTUdt(z.GroupID,
+z.NumVal,
+z.begin_flag,
+z.end_flag)) AS a,
+(SELECT vw.GroupID,
+vw.NumVal,
+NVL(LAG(0) OVER (PARTITION BY vw.GroupID ORDER BY
+vw.GroupID), 1) AS begin_flag,
+NVL(LEAD(0) OVER (PARTITION BY vw.GroupID ORDER BY
+vw.GroupID), 1) AS end_flag
+FROM view_studentst_1000 vw) AS z;

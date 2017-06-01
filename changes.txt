@@ -1,0 +1,35 @@
+
+1. Mathematical Functions
+	:NO CHANGES
+
+2. Statistical Functions
+	2.2.* Change all occurrance of a.value to a.Num_Val where 'a' is alias for table 'tblHomeSurveySparse'
+	2.6 result in manual need to be changed
+	
+3. Date Functions
+	3.1 FLCollapseDates  ..need to remove 00:00 from table 90
+	3.5 FLDatePart ...need to remove comma in year format column in manual .. 96
+	3.7 FLDecodeDates .. value at 31st row in manual is wrong..98
+	3.8 FLFirstLast .. remove extra 00:00:00 in table from manual 
+					.. value does not match in both query tables.. 99
+	
+4. String and Miscellaneous Utility Function
+	4.12 Change uppercase columns 'NoICMatch' and 'ICMatch' to lowercase
+	
+5. Area under the Curve – CDF and Inverse CDF Functions
+	5.2.28 Add semicolon at end of the query
+	
+7	Copulas – Multivariate Distributions
+	7.1  	tblsimuncorr,tblsimcorr,tblcholesky donot exist thus should be created with suitable schema before execution of querywas created 
+			tblcorrel donot exist hence create it and insert suitable data to run query..221	
+	7.2 	-do-
+	7.3 	-do-
+	
+8	MLE – Maximum Likelihood Estimation of Distribution Parameters
+	8.1 FLMLEBinomialUdt .. wrong result(although random is used) 230
+	8.2 FLMLEChiSqUdt -do- 232
+	8.3 FLMLEExpUdt ..wrong result(although random is used),table cropped in manual ..234
+	8.4 FLMLENormalUdt .. wrong result(although random is used) 236
+	8.5 FLMLEPoissonUdt -do- 238
+	8.6 FLMLEWeibullUdt -do- ,table cropped, 240
+	8.7 FLMLEStudentsTUdt ..no result while executing command;query command need to be changed
