@@ -1,4 +1,4 @@
-INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
 -- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Teradata Aster
 --
 -- Copyright (c): 2016 Fuzzy Logix, LLC
@@ -10,16 +10,13 @@ INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
 -- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
 -- Functional Test Specifications:
 --
--- 	Test Category:		    Simulating Univariate Distributions
+-- 	Test Category:		    Monte Carlo Simulation – Simulating Univariate Distributions
 --
 --	Last Updated:			05-30-2017
 --
 --	Author:			    	<kamlesh.meena@fuzzyl.com>
 --
 -- BEGIN: TEST SCRIPT
-\timing on
-Timing is on
--- BEGIN: TEST(s)
 -----****************************************************************
 ---FLSimBeta
 -----****************************************************************

@@ -1,4 +1,3 @@
-
 1. Mathematical Functions
 	:NO CHANGES
 
@@ -7,21 +6,21 @@
 	2.6 result in manual need to be changed
 	
 3. Date Functions
-	3.1 FLCollapseDates  ..need to remove 00:00 from table 90
-	3.5 FLDatePart ...need to remove comma in year format column in manual .. 96
 	3.7 FLDecodeDates .. value at 31st row in manual is wrong..98
-	3.8 FLFirstLast .. remove extra 00:00:00 in table from manual 
-					.. value does not match in both query tables.. 99
-	
-4. String and Miscellaneous Utility Function
-	4.12 Change uppercase columns 'NoICMatch' and 'ICMatch' to lowercase
+	3.8 FLFirstLast .. value does not match in both query tables.. 99
+
+4. String and Miscellaneous Utility Functions
+	:NO CHANGES
 	
 5. Area under the Curve – CDF and Inverse CDF Functions
 	5.2.28 Add semicolon at end of the query
+
+6. Monte Carlo Simulation – Univariate Distributions
+	:NO CHANGES
 	
 7	Copulas – Multivariate Distributions
 	7.1  	tblsimuncorr,tblsimcorr,tblcholesky donot exist thus should be created with suitable schema before execution of querywas created 
-			tblcorrel donot exist hence create it and insert suitable data to run query..221	
+			use tbldistcorrel instead of tblcorrel  ..221	
 	7.2 	-do-
 	7.3 	-do-
 	
@@ -33,3 +32,21 @@
 	8.5 FLMLEPoissonUdt -do- 238
 	8.6 FLMLEWeibullUdt -do- ,table cropped, 240
 	8.7 FLMLEStudentsTUdt ..no result while executing command;query command need to be changed
+
+9	Matrix Operations
+	9.1 to 9.5  .. change a.row to a.Row_ID, a.col to a.Col_ID,a.value to a.Cell_Val where a stands for tblmatrixmulti... 246
+	9.6 ..wrong table in manual(expected transpose column)
+			tblmatrix do not exist so use tblmatrixmulti with matrix_id=5   .. 256
+	9.7 ..tblmatrixresult do not exist and was created using following command:
+					CREATE TABLE TBLMATRIXRESULT
+					(
+					ROW_ID INTEGER,
+					COL_ID INTEGER,
+					CELL_VAL INTEGER
+					);						
+		tblmatrix do not exist so tblmatrixmulti is used with id=5..257
+	9.8.1 change a.row to a.Row_ID, a.col to a.Col_ID,a.value to a.Cell_Val where a stands for tblmatrixmulti 259
+	9.8.2 FLEigenValueStr .. tblmatrixresult do not exist ,a.row not found ..261
+	9.8.3 FLEigenVector .. a.row do not exist 264
+	9.8.4 -do-
+	9.8.6 FLEigenSystemStr .. a.row do not exist 273

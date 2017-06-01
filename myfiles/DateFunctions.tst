@@ -1,4 +1,4 @@
-INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
 -- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Teradata Aster
 --
 -- Copyright (c): 2016 Fuzzy Logix, LLC
@@ -17,8 +17,6 @@ INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
 --	Author:			    	<kamlesh.meena@fuzzyl.com>
 --
 -- BEGIN: TEST SCRIPT
-\timing on
-Timing is on
 -- BEGIN: TEST(s)
 -----****************************************************************
 ---FLCOLLAPSEDATES

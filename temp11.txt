@@ -29,7 +29,7 @@ drop table analysis;
 
 CREATE TABLE TBLSIMUNCORR
 (
-TRAILID INTEGER,
+TRIALID INTEGER,
 DRAWID DOUBLE,
 SERIESID DOUBLE,
 SIMVALUE DOUBLE
@@ -44,7 +44,7 @@ VALUE DOUBLE
 
 CREATE TABLE TBLSIMCORR
 (
-TRAILID INTEGER,
+TRIALID INTEGER,
 DRAWID DOUBLE,
 SERIESID DOUBLE,
 SIMVALUE DOUBLE
@@ -141,3 +141,46 @@ vw.GroupID), 1) AS begin_flag,
 NVL(LEAD(0) OVER (PARTITION BY vw.GroupID ORDER BY
 vw.GroupID), 1) AS end_flag
 FROM view_studentst_1000 vw) AS z;
+
+INSERT INTO tblCholesky
+SELECT FLMatrixRow(p.CholeskyStr) AS Row,
+FLMatrixCol(p.CholeskyStr) AS Col,
+FLMatrixVal(p.CholeskyStr) AS Value
+FROM (
+SELECT FLCholeskyStr(a.seriesid1, a.seriesid2, a.Correl)
+OVER (PARTITION BY 1) AS CholeskyStr
+FROM tbldistCorrel a
+WHERE a.seriesid1 <= 4 ---- Limit rows and columns
+AND a.seriesid2 <= 4 ---- to match the number of variates
+) AS p;
+INSERT INTO tblSimCorr
+SELECT p.TrialID,
+p.DrawID,
+p.SeriesID,
+q.Mean + q.StdDev * p.SimValue
+FROM (
+SELECT a.TrialID,
+a.DrawID,
+b.Row AS SeriesID,
+FLSumProd(b.Value, a.SimValue) AS SimValue
+FROM tblSimUncorr a,
+tblCholesky b
+WHERE b.Col = a.SeriesID
+GROUP BY a.TrialID, a.DrawID, b.Row
+) AS p,
+tblDistParams q
+WHERE q.SeriesID = p.SeriesID;
+
+
+INSERT INTO tblCholesky
+SELECT FLMatrixRow(p.CholeskyStr) AS Row,
+FLMatrixCol(p.CholeskyStr) AS Col,
+FLMatrixVal(p.CholeskyStr) AS Value
+FROM (
+SELECT FLCholeskyStr(a.seriesid1, a.seriesid2, a.Correl)
+OVER (PARTITION BY 1) AS CholeskyStr
+FROM tbldistCorrel a
+WHERE a.seriesid1 <= 4 ---- Limit rows and columns
+AND a.seriesid2 <= 4 ---- to match the number of variates
+) AS p
+ORDER BY 1, 2;

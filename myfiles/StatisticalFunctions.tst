@@ -11,8 +11,6 @@
 --	Author:			    	<kamlesh.meena@fuzzyl.com>
 --
 -- BEGIN: TEST SCRIPT
-\timing on
-Timing is on
 -- BEGIN: TEST(s)
 -----*******************************************************************************************************************************
 ---FLCorrel

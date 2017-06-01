@@ -1,4 +1,4 @@
-INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
 -- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Teradata Aster
 --
 -- Copyright (c): 2016 Fuzzy Logix, LLC
@@ -17,9 +17,6 @@ INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
 --	Author:			    	<kamlesh.meena@fuzzyl.com>
 --
 -- BEGIN: TEST SCRIPT
-\timing on
-Timing is on
--- BEGIN: TEST(s)
 -----****************************************************************
 ---FLMatrixDet
 -----****************************************************************
@@ -41,8 +38,8 @@ WHERE p.Determinant IS NOT NULL;
 -----****************************************************************
 ---FLMatrixInv
 -----****************************************************************
-SELECT a.Row,
-       a.Col,
+SELECT a.Row_ID,
+       a.Col_ID,
        FLMatrixInv(a.Row_ID, a.Col_ID, a.Cell_Val)
 OVER (PARTITION BY 1) AS Inverse
 FROM tblMatrixMulti a
@@ -56,8 +53,8 @@ ORDER BY 1, 2;
 -----****************************************************************
 ---FLMatrixRREF
 -----****************************************************************
-SELECT a.Row,
-       a.Col,
+SELECT a.Row_ID,
+       a.Col_ID,
        FLMatrixRREF(a.Row_ID, a.Col_ID, a.Cell_Val, 2)
 OVER (PARTITION BY Matrix_ID) AS RREF
 FROM tblMatrixMulti a
@@ -170,8 +167,8 @@ ORDER BY 1, 2;
 -----****************************************************************
 ---FLEigenValue
 -----****************************************************************
-SELECT a.Row,
-       a.Col,
+SELECT a.Row_ID,
+       a.Col_ID,
        FLEigenValue(a.Row_ID,
        a.Col_ID,
        a.Cell_Val)
@@ -186,8 +183,8 @@ ORDER BY 1, 2;
 -- If we are interested in only the non-zero values in the Eigen Value matrix
 SELECT p.*
 FROM (
-SELECT a.Row,
-       a.Col,
+SELECT a.Row_ID,
+       a.Col_ID,
        FLEigenValue(a.Row_ID,
        a.Col_ID,
        a.Cell_Val)
@@ -195,7 +192,7 @@ OVER (PARTITION BY 1) AS EigenValue
 FROM tblMatrixMulti a
 WHERE a.Matrix_ID = 5
 ) as p
-WHERE p.Row = p.Col
+WHERE p.Row_ID = p.Col_ID
 ORDER BY 1, 2;
 
 
@@ -240,8 +237,8 @@ WHERE a.Matrix_ID = 5
 -----****************************************************************
 ---FLEigenVector
 -----****************************************************************
-SELECT a.Row,
-       a.Col,
+SELECT a.Row_ID,
+       a.Col_ID,
        FLEigenVector(a.Row_ID,
 					a.Col_ID,
 					a.Cell_Val)

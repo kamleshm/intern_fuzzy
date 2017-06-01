@@ -7,7 +7,8 @@
 *************************************************************************
 7.1  	tblsimuncorr,tblsimcorr,tblcholesky donot exist and was created 221
 		not solution found from teradata
-		tblcorrel donot exist		
+		tblcorrel donot exist
+		:no corresponding query in teradata
 7.2 	-do-
 7.3 	-do-
 *************************************************************************
