@@ -1,0 +1,21 @@
+1. FLCap
+	no error message for:
+	SELECT FLCap(5.0 * 1e-400, 3.0 * 1e-400) AS Cap;
+	SELECT FLCap(NULL, 3.0) AS Cap;
+	SELECT FLCap(5.0, NULL) AS Cap;
+	
+2. FLCollar
+	no error message for:
+	SELECT FLCollar(39.0 * 1e-400, 5.0 * 1e-400, -5.0 * 1e-400) AS Collar;
+	SELECT FLCollar(NULL, -5.0, 5.0) AS Collar;
+	SELECT FLCollar(39.0, NULL, 5.0) AS Collar;
+	SELECT FLCollar(39.0, -5.0, NULL) AS Collar;	
+	
+3. FLGammaLn
+	SELECT FLGammaLn(2) AS GammaLn; gives -1.7763568394003e-15 as output but output as 0 is recommended
+	no error message for:
+	SELECT FLGammaLn(0) AS GammaLn;
+	SELECT FLGammaLn(NULL) AS GammaLn;
+	
+4.  FLFloor
+	SELECT FLFloor(5.0 * 1e-400, 3.0 * 1e-400) AS FLoor;
