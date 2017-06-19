@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -67,5 +67,5 @@ DROP VIEW UM_view_ANOVA1Way;
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off
 

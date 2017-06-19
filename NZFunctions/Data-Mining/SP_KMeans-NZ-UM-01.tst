@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -56,4 +56,4 @@ LIMIT 20;
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off

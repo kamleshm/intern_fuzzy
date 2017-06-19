@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -43,5 +43,5 @@ WHERE   TestType = 'tTest';
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off
 

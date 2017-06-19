@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -50,5 +50,5 @@ WHERE AnalysisID=
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off
 

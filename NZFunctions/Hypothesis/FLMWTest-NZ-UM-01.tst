@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 -----*******************************************************************************************************************************
@@ -57,5 +57,5 @@ WHERE y.Rank = x.Rank;
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off
 

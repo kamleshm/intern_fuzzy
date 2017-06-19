@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -59,4 +59,4 @@ WHERE Analysisid = (SELECT Analysisid
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off

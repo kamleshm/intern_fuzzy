@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -42,5 +42,5 @@ FROM tblHypoTest a;
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off
 

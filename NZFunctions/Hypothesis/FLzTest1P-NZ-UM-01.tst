@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -44,5 +44,5 @@ ORDER BY 1;
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off
 

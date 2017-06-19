@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -67,4 +67,4 @@ FROM
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off

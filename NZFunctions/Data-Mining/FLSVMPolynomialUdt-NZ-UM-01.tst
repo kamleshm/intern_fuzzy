@@ -19,7 +19,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-\timing on
+--timing on
 
 -- BEGIN: TEST(s)
 
@@ -55,4 +55,4 @@ TABLE(FLSVMPolynomialUdt(z.GroupID,
 -- END: TEST(s)
 
 -- END: TEST SCRIPT
-\timing off
+--timing off
