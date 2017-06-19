@@ -18,4 +18,32 @@
 	SELECT FLGammaLn(NULL) AS GammaLn;
 	
 4.  FLFloor
+	no error message for:
 	SELECT FLFloor(5.0 * 1e-400, 3.0 * 1e-400) AS FLoor;
+	SELECT FLFloor(NULL, 3.0) AS FLoor;
+	SELECT FLFloor(5.0, NULL) AS FLoor;
+	
+!/bin/bash
+a=`openssl rand -base64 16 | colrm 17`
+count=1
+echo $a
+sed -E "s/(NOTE).*(\))/NOTE =\'$a$count\'/g" sample.tst
+sed -E "/(FL_)/s/helloworld/$a$count/g" sample.tst
+sed -E "/(SP_)/s/helloworld/$a$count/g" sample.tst
+
+
+#!/bin/bash
+str=`openssl rand -base64 16 | colrm 17`
+count=0
+echo $str
+#sed -E "s/helloworld/$str$count/g" sample.tst
+while read line
+do
+  if [[ $line =~ "EXEC " ]]; then
+    count=$((count+1))
+  elif [[ $line =~ "CALL" ]]; then
+    count=$((count+1))
+  fi
+  echo $line | sed -e "s/helloworld/$str$count/g"
+done<sample.tst
+

@@ -191,7 +191,6 @@ EXEC SP_DecisionTree('tblDecisionTreeMulti_VW',
 ---SP_KaplanMeier
 -----*******************************************************************************************************************************
 SELECT '***** EXECUTING SP_KaplanMeier *****';
-DROP VIEW vwWHAS100;
 CREATE OR REPLACE VIEW vwWHAS100 AS
 SELECT 1 AS DataSetID,
        a.ID AS ObsID,
@@ -207,23 +206,20 @@ SELECT 2 AS DataSetID,
        a.Gender
 FROM tblWHAS100 a;
 
-\o foo.out
-EXEC SP_KaplanMeier('vwWHAS100',0.05,'2 Sets Est');
-\o
-\! cat foo.out
-\! grep [0-9]$ foo.out | awk '{print $NF}' > new
-CREATE TABLE analysis(col1 varchar(50));
-INSERT INTO analysis select * from external '/export/home/nz/new';
+CREATE TABLE analysis
+AS
+(SELECT FLSimStr(Random(),20,1,1));
+
+EXEC SP_KaplanMeier('vwWHAS100',0.05,'hello world');
 
 SELECT *
 FROM fzzlKaplanMeierInfo
-WHERE Analysisid = (SELECT * FROM analysis);
+WHERE Analysisid = (SELECT analysisid FROM fzzlkaplanmeierinfo WHERE runendtime=(SELECT max(runendtime) FROM fzzlkaplanmeierinfo));
 SELECT *
 FROM fzzlKaplanMeier
-WHERE Analysisid = (SELECT * FROM analysis)
+WHERE Analysisid = (SELECT analysisid FROM fzzlkaplanmeierinfo WHERE runendtime=(SELECT max(runendtime) FROM fzzlkaplanmeierinfo))
 LIMIT 20;
 DROP TABLE analysis;
-\!rm -f foo.out new
 
 
 
