@@ -11,7 +11,7 @@
 --
 -- Functional Test Specifications:
 --
--- 	Test Category:	    Corporate Finance Functions
+-- 	Test Category:	    Data Mining Functions
 --
 --	Last Updated:		05-29-2017
 --
@@ -24,33 +24,32 @@
 -- BEGIN: TEST(s)
 
 
+SELECT '***** EXECUTING FLSVMPolynomialUdt *****';
+SELECT f.*
+FROM(SELECT 1 As GroupID,
+            a.ObsID,
+            a.VarID,
+            a.Num_Val,
+            5 As CValue,
+            2 As Degree,
+            NVL(LAG(0) OVER (PARTITION BY GroupID ORDER BY a.ObsID), 1) 
+            AS begin_flag, 
+            NVL(LEAD(0) OVER (PARTITION BY GroupID ORDER BY a.ObsID), 1)
+            AS end_flag
+FROM tblSVMnonLinearSeparated a) AS z,
+TABLE(FLSVMPolynomialUdt(z.GroupID, 
+                         z.ObsID, 
+                         z.VarID, 
+                         z.Num_Val, 
+                         z.CValue, 
+                         z.Degree, 
+                         z.begin_flag, 
+                         z.end_flag)) AS f
+                         ORDER BY 1, 2, 3;
+						 LIMIT 20;
 
 
 
------*******************************************************************************************************************************
----SP_NBBO
------*******************************************************************************************************************************
-CALL SP_NBBO('finTaqQuote' ,
-            'IBM',
-            'QuoteDateTime',
-            'Exchange',
-            'SymbolRoot',
-            'BidPrice',
-            'Bidsize',
-            'AskPrice',
-            'AskSize',
-            '2010-01-04 10:00:01',
-            '2010-01-04 18:07:56.948000',
-            'IBM NBBO');
-            
-
-SELECT *
-FROM fzzlNBBOInfo
-WHERE Analysisid = 'AMAHATO_531155';
-
-SELECT *
-FROM fzzlNBBO
-WHERE AnalysisID ='AMAHATO_531155';
 
 
 -- END: TEST(s)
