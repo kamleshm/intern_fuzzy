@@ -1,0 +1,19 @@
+Usage: python PulsarTest.py [options] ...
+
+Run testing on the .tst script provided as argument by the user on netezza
+Outputs a logfile containing the logs of all successful and failed passes with corresponding errors
+
+Options:
+	--config 		Use myconfig.py to get arguments
+	-j [N]			Allow N jobs at once; infinite jobs with no arg
+	UNITTEST="FILES"	Run testing on FILES which can be a single file 
+				or multiple space seperated files
+	TESTCAT="DIRECTORIES"   Run testing on all .tst scripts in DIRECTORIES 
+				which can be a single directory 
+				or multiple space seperated directory 
+	AUTOTST			Generates .out and .sdiff files for .rslt file
+	AUTOREF			Genarates .rslt files
+
+Copyright:
+	@Netezza IBM
+	
