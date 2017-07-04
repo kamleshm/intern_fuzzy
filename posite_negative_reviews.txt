@@ -1,0 +1,164 @@
+1. Mathematical 
+1.1 FLCAP
+	No error message for NULL value passed:
+	SELECT FLCap(NULL, 3.0) AS Cap;
+	SELECT FLCap(5.0, NULL) AS Cap;
+
+1.2 FLCOllar
+	No error message for NULL value passed:
+	SELECT FLCollar(NULL, -5.0, 5.0) AS Collar;
+	SELECT FLCollar(39.0, NULL, 5.0) AS Collar;
+	SELECT FLCollar(39.0, -5.0, NULL) AS Collar;
+	
+1.3 FLGammaLn
+	1) Positive Test 3: Should Output 0
+		SELECT FLGammaLn(2) AS GammaLn;  returns  -1.7763568394003e-15 instead of zero as in TD
+	2)--- Return expected error, Good
+		SELECT FLGammaLn(0) AS GammaLn; return "Infinity" instead of error message as in TD
+	3)No error message for NULL value passed as in TD
+		SELECT FLGammaLn(NULL) AS GammaLn;
+	
+1.4 FLFLoor
+	1)SELECT FLFloor(5.0 * 1e-400, 3.0 * 1e-400) AS FLoor return 0 instead of error message as in TD
+	2)No error message for NULL value passed as in TD
+	SELECT FLFloor(NULL, 3.0) AS FLoor;
+	SELECT FLFloor(5.0, NULL) AS FLoor;
+
+2. Statistical 
+2.1 FLCOrrel
+	1)commented query was uncommented :;
+		SELECT COUNT(*) AS CNT,
+			CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+		ROM   fzzlSerial a;
+	2)Negative Test 5: No error was given (e-400)
+
+2.2 FLCount
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ==> No error message received and the query executed successfully
+
+2.3 No script for FLCountIf
+
+2.4 FLCountNeg
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
+
+2.5 FLCountNull
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
+
+2.6 FLCountPos
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
+	
+2.7 FLCountZero
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
+	
+2.8 FLCovar
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)Negative Test 4: Value(Double Precision) out of range: Sample Covariance of 1.0e-400 * Value ==> No error message received and the query executed successfully
+	
+2.9 FLCovarP
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)COVAR_POP doesnot exist 
+
+2.10 FLDevSq
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   tblCustData a;
+	2)Positive Test 8: Add a very large number, Results should not change
+		Results does not match with TD results
+	3)Negative Test 3: Value(Double Precision) out of range: Deviation Square of 1.0e-400 * Value ==>No error message received and the query executed successfully
+	
+2.1.11 FLGeoMean
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   tblCustData a;
+	2) Negative Test 5: Value(Double Precision) out of range: Geo Mean of 1.0e-400 * Value ===> incorrect error message is printed i.e "The value must be greater than zero." 
+	
+2.1.12 FLHarMean
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   tblCustData a;
+	2)Negative Test 5: Value(Double Precision) out of range: Geo Mean of 1.0e-400 * Value ===> incorrect error message is printed i.e "The value must be greater than zero."
+	
+2.1.13 FLMean
+	1)commented query was uncommented :
+	 SELECT COUNT(*) AS CNT,
+       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   finEquityReturns a;
+	2)Negative Test 3: Value(Double Precision) out of range: Mean of 1.0e-400 * Value ==> No error message received and the query executed successfully
+	
+2.1.14 FLKurtosis
+	1)commented query was uncommented :
+	SELECT COUNT(*) AS CNT,
+       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
+	FROM   fzzlSerial a;
+	2)---- Positive Test 7: Gives error  Float8 result is a NaN
+	3)---- Positive Test 8 : -do-  , same occured in TD also
+	4)---- Positive Test 9 : -do- , -do-
+	5)---- Negative Test 4: Value(Double Precision) out of range: Kurtosis of 1.0e-400 * Value ====> gives incorrect error message i.e " Float8 result is a NaN"
+
+2.1.15 FLMax
+	1)commented query was uncommented
+	2) Negative Test 1: No data ===> Non-Null value is returned i.e ( "0" )
+	3)Negative Test 2b: Invalid Data type: Input VarChar ==> No error message returned and query exits successfully
+	
+2.1.16 FLMedianWin
+	1)commented query was uncommented
+	2)Negative Test 3: Value(Double Precision) out of range: Median of 1.0e-400 * Value ==> No error message returned and query exits successfully
+	3)---- Negative Test 4: Invalid Data Type: Input Varchar
+		Query was edited to remove syntax error and also to match the testing purpose i.e (invalid data type)
+		But the quey runs without giving any error
+	
+2.1.17 FLMin
+	1)commented query was uncommented
+	2)Negative Test 2b: Invalid Data type: Input VarChar for 2nd Argument ====> query runs successfully without error
+
+2.1.18 FLNTileWin
+	None
+	
+2.1.19 FLPercWin
+	1)commented query was uncommented
+	2)---- Positive Test 3: Positive test cases, Results should be 50.5, Compared with FLMedianWin()==> FLPercWin() argument was changed from 0.75 to 0.50 to match the testing purpose
+	3)---- Negative Test 3: Value(Double Precision) out of range: Percentile of 1.0e-400 * Value ===> No error message returned and query exits successfully
+	4)---- Negative Test 4: Invalid Data Type:Input Varchar ===> No error message returned and query exits successfully
+	
+2.1.20 FLPercentWin
+	None
+	
+2.1.21 FLProd
+	1)commented query was uncommented
+
+
+
+
+
+
+
+
+	

@@ -14,7 +14,7 @@ import commands
 
 #---------------------variable used in the script------------------------------------------------
 
-all_tst=[]              #list of all .tst scripts to be tested
+all_tst=[]      #list of all .tst scripts to be tested
 all_tst1=[]		#list of all .tst script where Analysis_id is involved
 tmp_tst=[]		#list of all newly created TMP.tst script where Analysis_id is involved 
 all_tst2=[]		#list of all .tst script where Analysis_id is not involved and modified TMP.tst scripts where Analysisid is involved
