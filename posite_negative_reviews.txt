@@ -401,3 +401,68 @@
 
 5.2.32 FLInvCDFWeibull
 	1)--  Case 1c ====> no error occured for using argument value less than e-307	
+
+8
+8.1 FLMLEBinomialUdt
+	Negative Tests:
+		1)error for :1.b,d,g,h,i,p,q,s,v,w,z,ae,af,ah,
+		2)error for :2.b,d,g,h,i,p,q,s,v,w,z,ae,af,ah
+		3)error for :3.a,
+		4)error for :5.a,b
+
+8.2  FLMLEChiSqUdt
+	Negative Tests
+		1)error for :1.b,d,g,h,i,k ( here the query is same as in TD i.e HASH and WITH are used),p,q,s,v,w,z,ae,af,ah,
+		2)section 2 of negative test is uncommented : error for :2.a,b,c,d,e,g,h,i,j,k,m,n,o,p,q,s,t,u,v,w,x,y,z,ab,ac,ae,af,ag,ah,ai,aj,
+		3)error for :3.a,b,c
+		4)error for :5.a,b
+	
+8.3 FLMLEExpUdt
+	Negative Tests
+		1)error for 1.k( here the query is same as in TD i.e HASH and WITH are used)
+		2)section 2 of negative test is uncommented : error for :2.ab,
+		3)error for :3.a,b,c
+		4)error for :5.a,b
+	
+8.4 FLMLENormalUdt
+	Negative Tests
+		1)error for 1.k( here the query is same as in TD i.e HASH and WITH are used)
+		2)section 2 of negative test is uncommented : error for :2.ab, ("An error occurred while inverting the matrix")
+		3)error for :3.a,b,c ("An error occurred while inverting the matrix")
+		4)error for :5.a,b ("Value cannot be NULL.")
+	Positive Tests
+		1)errors for :2a,b,c ("An error occurred while inverting the matrix")
+		
+8.5 FLMLEPoissonUdt
+	Negative Tests
+		1)error for 1.b,d,g,h,i,k ( here the query is same as in TD i.e HASH and WITH are used),p,q,s,v,w,z,ae,af,ah,
+		2)error for :2.b,d,g,h,i,p,q,s,v,w,z,ae,af,ah
+		3)error for :3.a ("An error occurred while inverting the matrix")
+		4)error for :5.a,b ("Value cannot be NULL.")
+	Positive Tests
+		1)test 1 :===> changed Shape1 to Shape to remove syntax error
+		
+8.6 FLMLEWeibullUdt
+	Negative Tests
+		1)error for 1.b,d,g,h,i,k ( here the query is same as in TD i.e HASH and WITH are used),p,q,s,v,w,z,ae,af,ah,
+		2)section 2 of negative test is uncommented : error for :2.a2.a,b,c,d,e,g,h,i,j,k,m,n,o,p,q,s,t,u,v,w,x,y,z,ab,ac,ad,ae,af,ag,ah,ai,aj,
+		3)error for :3.a,b,c 
+		4)error for :4.b  
+		5)error for :5.a,b ("Value cannot be NULL.")
+	Positive Tests
+		1)test 1,2* :===>  error message " An error occurred while inverting the matrix." returned
+		
+8.7 FLMLEStudentsTUdt
+	Negative Tests
+		1)empty output table for 1.a,b,e,f,g,h,i,j,k,n,o,p,q,r,s,u,v,w,y,z,ab,ac,ad,ae,ag,ah,ai,aj,ak,al,an,
+		2)error for 1.c,d,l,m,t,x,aa,af,am,ao,
+		3)empty output table for 2.b,e,f,h,n,p,q,s,v,w,ac,ad,ae,aj,ak,al,an,ao
+		4)error for 2.a,c,d,g,i,j,k,l,m,o,r,t,u,x,y,z,aa,ab,af,ag,ah,ai,am
+		5)empty output table for 3.a
+		6)error for 3.b,c
+		7)error for :4.a,b,c  
+		8)error for :5.a,b ("Value cannot be NULL.")
+		9)empty output table for case 6
+	Positive Tests
+		1)empty output table for case 1
+		2)case 2 :===> view creaation query edited by providing required parameters . Error occurs "An error occurred while inverting the matrix"
