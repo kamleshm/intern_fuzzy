@@ -1,0 +1,48 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLCovarP
+-----****************************************************************
+SELECT a.TickerSymbol AS Ticker1,
+       b.TickerSymbol AS Ticker2,
+       FLCovarP(a.EquityReturn, b.EquityReturn) AS FLCovarP
+FROM  finEquityReturns a,
+	finEquityReturns b
+WHERE b.TxnDate = a.TxnDate
+AND  a.TickerSymbol = 'MSFT'
+AND  b.TickerSymbol IN ('AAPL','HPQ','IBM','MSFT','ORCL')
+GROUP BY a.TickerSymbol, b.TickerSymbol
+ORDER BY 1, 2;
+ TICKER1 | TICKER2 |      FLCOVARP       
+---------+---------+---------------------
+ MSFT    | AAPL    | 0.00018920402397786
+ MSFT    | HPQ     | 0.00018658862170078
+ MSFT    | IBM     | 0.00014239195455258
+ MSFT    | MSFT    | 0.00031969794837437
+ MSFT    | ORCL    | 0.00020850956837868
+(5 rows)
+
+Elapsed time: 0m2.271s
+
+
+
+---------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

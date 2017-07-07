@@ -1,0 +1,138 @@
+-- INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+-- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Netezza
+--
+-- Copyright (c): 2016 Fuzzy Logix, LLC
+--
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    String and Miscellaneous Utility Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----****************************************************************
+---FLREGEXP_LIKE
+-----****************************************************************
+SELECT 	string_pattern,
+		reg_exp,
+		FLREGEXP_LIKE(string_pattern, reg_exp, false) as noic_match,
+		FLREGEXP_LIKE(string_pattern, reg_exp, true) as ic_match
+FROM 	tblRegExpPatterns p,
+		tblStringPatterns s
+ORDER BY 1, 2;
+   STRING_PATTERN   |   REG_EXP    | NOIC_MATCH | IC_MATCH 
+--------------------+--------------+------------+----------
+ 01234567.89        | [[:alnum:]]  | t          | t
+ 01234567.89        | [[:alpha:]]  | f          | f
+ 01234567.89        | [[:blank:]]  | f          | f
+ 01234567.89        | [[:cntrl:]]  | f          | f
+ 01234567.89        | [[:digit:]]  | t          | t
+ 01234567.89        | [[:graph:]]  | t          | t
+ 01234567.89        | [[:lower:]]  | f          | f
+ 01234567.89        | [[:print:]]  | t          | t
+ 01234567.89        | [[:punct:]]  | t          | t
+ 01234567.89        | [[:space:]]  | f          | f
+ 01234567.89        | [[:upper:]]  | f          | f
+ 01234567.89        | [[:xdigit:]] | t          | t
+ 0123456789         | [[:alnum:]]  | t          | t
+ 0123456789         | [[:alpha:]]  | f          | f
+ 0123456789         | [[:blank:]]  | f          | f
+ 0123456789         | [[:cntrl:]]  | f          | f
+ 0123456789         | [[:digit:]]  | t          | t
+ 0123456789         | [[:graph:]]  | t          | t
+ 0123456789         | [[:lower:]]  | f          | f
+ 0123456789         | [[:print:]]  | t          | t
+ 0123456789         | [[:punct:]]  | f          | f
+ 0123456789         | [[:space:]]  | f          | f
+ 0123456789         | [[:upper:]]  | f          | f
+ 0123456789         | [[:xdigit:]] | t          | t
+ :-^%&#6789         | [[:alnum:]]  | t          | t
+ :-^%&#6789         | [[:alpha:]]  | f          | f
+ :-^%&#6789         | [[:blank:]]  | f          | f
+ :-^%&#6789         | [[:cntrl:]]  | f          | f
+ :-^%&#6789         | [[:digit:]]  | t          | t
+ :-^%&#6789         | [[:graph:]]  | t          | t
+ :-^%&#6789         | [[:lower:]]  | f          | f
+ :-^%&#6789         | [[:print:]]  | t          | t
+ :-^%&#6789         | [[:punct:]]  | t          | t
+ :-^%&#6789         | [[:space:]]  | f          | f
+ :-^%&#6789         | [[:upper:]]  | f          | f
+ :-^%&#6789         | [[:xdigit:]] | t          | t
+ ABCDEFGH0123456789 | [[:alnum:]]  | t          | t
+ ABCDEFGH0123456789 | [[:alpha:]]  | t          | t
+ ABCDEFGH0123456789 | [[:blank:]]  | f          | f
+ ABCDEFGH0123456789 | [[:cntrl:]]  | f          | f
+ ABCDEFGH0123456789 | [[:digit:]]  | t          | t
+ ABCDEFGH0123456789 | [[:graph:]]  | t          | t
+ ABCDEFGH0123456789 | [[:lower:]]  | f          | t
+ ABCDEFGH0123456789 | [[:print:]]  | t          | t
+ ABCDEFGH0123456789 | [[:punct:]]  | f          | f
+ ABCDEFGH0123456789 | [[:space:]]  | f          | f
+ ABCDEFGH0123456789 | [[:upper:]]  | t          | t
+ ABCDEFGH0123456789 | [[:xdigit:]] | t          | t
+ ABCDEFGHI          | [[:alnum:]]  | t          | t
+ ABCDEFGHI          | [[:alpha:]]  | t          | t
+ ABCDEFGHI          | [[:blank:]]  | f          | f
+ ABCDEFGHI          | [[:cntrl:]]  | f          | f
+ ABCDEFGHI          | [[:digit:]]  | f          | f
+ ABCDEFGHI          | [[:graph:]]  | t          | t
+ ABCDEFGHI          | [[:lower:]]  | f          | t
+ ABCDEFGHI          | [[:print:]]  | t          | t
+ ABCDEFGHI          | [[:punct:]]  | f          | f
+ ABCDEFGHI          | [[:space:]]  | f          | f
+ ABCDEFGHI          | [[:upper:]]  | t          | t
+ ABCDEFGHI          | [[:xdigit:]] | t          | t
+ abcdEFGh0123456789 | [[:alnum:]]  | t          | t
+ abcdEFGh0123456789 | [[:alpha:]]  | t          | t
+ abcdEFGh0123456789 | [[:blank:]]  | f          | f
+ abcdEFGh0123456789 | [[:cntrl:]]  | f          | f
+ abcdEFGh0123456789 | [[:digit:]]  | t          | t
+ abcdEFGh0123456789 | [[:graph:]]  | t          | t
+ abcdEFGh0123456789 | [[:lower:]]  | t          | t
+ abcdEFGh0123456789 | [[:print:]]  | t          | t
+ abcdEFGh0123456789 | [[:punct:]]  | f          | f
+ abcdEFGh0123456789 | [[:space:]]  | f          | f
+ abcdEFGh0123456789 | [[:upper:]]  | t          | t
+ abcdEFGh0123456789 | [[:xdigit:]] | t          | t
+ abcdefgh0123456789 | [[:alnum:]]  | t          | t
+ abcdefgh0123456789 | [[:alpha:]]  | t          | t
+ abcdefgh0123456789 | [[:blank:]]  | f          | f
+ abcdefgh0123456789 | [[:cntrl:]]  | f          | f
+ abcdefgh0123456789 | [[:digit:]]  | t          | t
+ abcdefgh0123456789 | [[:graph:]]  | t          | t
+ abcdefgh0123456789 | [[:lower:]]  | t          | t
+ abcdefgh0123456789 | [[:print:]]  | t          | t
+ abcdefgh0123456789 | [[:punct:]]  | f          | f
+ abcdefgh0123456789 | [[:space:]]  | f          | f
+ abcdefgh0123456789 | [[:upper:]]  | f          | t
+ abcdefgh0123456789 | [[:xdigit:]] | t          | t
+ abcdefghi          | [[:alnum:]]  | t          | t
+ abcdefghi          | [[:alpha:]]  | t          | t
+ abcdefghi          | [[:blank:]]  | f          | f
+ abcdefghi          | [[:cntrl:]]  | f          | f
+ abcdefghi          | [[:digit:]]  | f          | f
+ abcdefghi          | [[:graph:]]  | t          | t
+ abcdefghi          | [[:lower:]]  | t          | t
+ abcdefghi          | [[:print:]]  | t          | t
+ abcdefghi          | [[:punct:]]  | f          | f
+ abcdefghi          | [[:space:]]  | f          | f
+ abcdefghi          | [[:upper:]]  | f          | t
+ abcdefghi          | [[:xdigit:]] | t          | t
+(96 rows)
+
+Elapsed time: 0m0.111s
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

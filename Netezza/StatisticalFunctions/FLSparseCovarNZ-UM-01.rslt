@@ -1,0 +1,88 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLSparseCovar
+-----****************************************************************
+WITH tblHomeSurveyStats (MediaOutletID, VarSum, VarSqSum) AS
+(
+SELECT a.MediaOutletID,
+       SUM(a.Num_Val) AS VarSum,
+       SUM(a.Num_Val * a.Num_Val) AS VarSqSum
+FROM   tblHomeSurveySparse a
+GROUP BY a.MediaOutletID
+)
+SELECT a.MediaOutletID1,
+       a.MediaOutletID2,
+       FLSparseCovar(a.VarSumXY,
+                     x1.VarSum,
+                     x2.VarSum,
+                     x1.VarSqSum,
+                     x2.VarSqSum,
+                     9605) AS FLSparseCovar
+FROM
+       (
+       SELECT a.MediaOutletID AS MediaOutletID1,
+              b.MediaOutletID AS MediaOutletID2,
+              SUM(a.Num_Val * b.Num_Val) AS VarSumXY
+       FROM   tblHomeSurveySparse a,
+              tblHomeSurveySparse b
+       WHERE   b.ValueID = a.ValueID
+       GROUP BY a.MediaOutletID, b.MediaOutletID
+       ) AS a,
+       tblHomeSurveyStats x1,
+       tblHomeSurveyStats x2
+WHERE  x1.MediaOutletID = a.MediaOutletID1
+AND    x2.MediaOutletID = a.MediaOutletID2
+AND    x1.MediaOutletID <= 10
+AND    x2.MediaOutletID <= 10
+AND    x1.MediaOutletID <= x2.MediaOutletID
+ORDER BY 1, 2
+LIMIT 20;
+ MEDIAOUTLETID1 | MEDIAOUTLETID2 |   FLSPARSECOVAR    
+----------------+----------------+--------------------
+              1 |              1 |  0.032500838514926
+              1 |              2 | 0.0097079756591096
+              1 |              3 |  0.010930180271495
+              1 |              4 | 0.0031928068319616
+              1 |              5 | 0.0064827339640931
+              1 |              6 |  0.011185051951068
+              1 |              7 |  0.002480714156712
+              1 |              8 |  0.012045497266994
+              1 |              9 | 0.0091245167021116
+              1 |             10 | 0.0023502375485141
+              2 |              2 |   0.24236784473587
+              2 |              3 |  0.095328631723594
+              2 |              4 |  0.019281940697536
+              2 |              5 |  0.053233166121786
+              2 |              6 |   0.11170656812481
+              2 |              7 |  0.016181733665111
+              2 |              8 |  0.088152190621598
+              2 |              9 |  0.055146519507207
+              2 |             10 |  0.014269724505298
+              3 |              3 |   0.24380566747197
+(20 rows)
+
+Elapsed time: 0m0.182s
+
+
+
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

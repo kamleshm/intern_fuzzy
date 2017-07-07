@@ -1,0 +1,44 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLMean
+-----****************************************************************
+SELECT a.TickerSymbol,
+ 	FLMean(a.ClosePrice) AS FLMean
+FROM   finStockPrice a
+WHERE a.TickerSymbol IN ('AAPL','HPQ','IBM','MSFT','ORCL')
+GROUP BY a.TickerSymbol
+ORDER BY 1;
+ TICKERSYMBOL |     FLMEAN      
+--------------+-----------------
+ AAPL         | 21.072671058195
+ HPQ          | 29.320304675523
+ IBM          | 72.915991503268
+ MSFT         | 24.337859324494
+ ORCL         | 11.510229232912
+(5 rows)
+
+Elapsed time: 0m0.313s
+
+
+
+---------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

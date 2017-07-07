@@ -1,0 +1,61 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLShuffleCorrelWin
+-----****************************************************************
+SELECT p.*
+FROM(SELECT a.TickerSymbol,
+            FLShuffleCorrelWin(a.closeprice, a.Volume) 
+     OVER(PARTITION BY a.TickerSymbol) AS ShuffleCorrel
+     FROM FINSTOCKPRICE a) AS p
+WHERE p.ShuffleCorrel IS NOT NULL
+ORDER BY 1
+LIMIT 20;
+ TICKERSYMBOL |    SHUFFLECORREL    
+--------------+---------------------
+ AAPL         |  -0.047739227913226
+ ABI          | -0.0012834501251013
+ ABK          |  -0.016494874610764
+ ABS          |  -0.014280695827508
+ ABT          |  -0.038976081975172
+ ACE          |   0.016413614708896
+ ACV          |  -0.019192047628427
+ ADBE         | -0.0068923611145835
+ ADCT         |  0.0073684824858951
+ ADI          |   0.013132562503134
+ ADM          | -0.0057060856013392
+ ADP          |  -0.021832208558577
+ ADSK         |  -0.012626696799966
+ AEE          | -0.0093221471632433
+ AEP          |  0.0041140409786345
+ AES          | -0.0073010731252555
+ AET          |  -0.033220262304646
+ AFL          |  -0.036195068650519
+ AGN          |  -0.019711155181835
+ AHC          | -0.0044011272135729
+(20 rows)
+
+Elapsed time: 0m1.465s
+
+
+
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

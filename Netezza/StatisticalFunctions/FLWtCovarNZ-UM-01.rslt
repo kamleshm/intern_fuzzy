@@ -1,0 +1,78 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLWtCovar
+-----****************************************************************
+SELECT a.TickerSymbol AS Ticker1,
+       b.TickerSymbol AS Ticker2,
+       FLWtCovar(c.StockReturn,
+                 d.StockReturn,
+                 CAST((a.Volume + b.Volume) AS DOUBLE PRECISION)/2,
+                 1) AS FLWtCovar1,
+       FLWtCovar(c.StockReturn,
+                 d.StockReturn,
+                 CAST((a.Volume + b.Volume) AS DOUBLE PRECISION)/2,
+                 2) AS FLWtCovar2,
+       FLWtCovar(c.StockReturn,
+                 d.StockReturn,
+                 CAST((a.Volume + b.Volume) AS DOUBLE PRECISION)/2,
+                 3) AS FLWtCovar3
+FROM   finStockPrice a,
+       finStockPrice b,
+       finStockReturns c,
+       finStockReturns d
+WHERE  b.TickerID <> a.TickerID AND b.DateIdx = a.DateIdx
+AND    a.TickerSymbol IN ('AAPL','HPQ','IBM','MSFT','ORCL')
+AND    b.TickerSymbol IN ('AAPL','HPQ','IBM','MSFT','ORCL')
+AND    c.TickerID = a.TickerID AND d.TickerID = b.TickerID
+AND    c.DateIdx = b.DateIdx AND d.DateIdx = c.DateIdx
+GROUP BY a.TickerSymbol, b.TickerSymbol
+ORDER BY 1,2;
+ TICKER1 | TICKER2 |     FLWTCOVAR1      |     FLWTCOVAR2      |   FLWTCOVAR3    
+---------+---------+---------------------+---------------------+-----------------
+ AAPL    | HPQ     | 9.2419575710361e-05 | 9.2470786720231e-05 | 692.03745573774
+ AAPL    | IBM     | 5.9416973905437e-05 | 5.9449561023379e-05 | 477.91301333693
+ AAPL    | MSFT    | 6.8728985695865e-05 | 6.8764542813772e-05 | 2624.7937359402
+ AAPL    | ORCL    | 9.1238109813925e-05 |  9.129466989495e-05 | 2620.4161570065
+ HPQ     | AAPL    | 9.2419575710361e-05 | 9.2470786720231e-05 | 692.03745573774
+ HPQ     | IBM     | 6.0666308406029e-05 | 6.0697645780833e-05 | 553.73214513377
+ HPQ     | MSFT    | 6.7562686161569e-05 | 6.7597432747899e-05 | 2654.4297206966
+ HPQ     | ORCL    | 8.8466001280271e-05 | 8.8519316605637e-05 | 2636.6157514848
+ IBM     | AAPL    | 5.9416973905437e-05 | 5.9449561023379e-05 | 477.91301333693
+ IBM     | HPQ     | 6.0666308406029e-05 | 6.0697645780833e-05 | 553.73214513377
+ IBM     | MSFT    | 5.4896295197983e-05 | 5.4924684312335e-05 | 2187.4259133129
+ IBM     | ORCL    | 6.9767032763357e-05 | 6.9809134360948e-05 |  2118.091222525
+ MSFT    | AAPL    | 6.8728985695865e-05 | 6.8764542813772e-05 | 2624.7937359402
+ MSFT    | HPQ     | 6.7562686161569e-05 | 6.7597432747899e-05 | 2654.4297206966
+ MSFT    | IBM     | 5.4896295197983e-05 | 5.4924684312335e-05 | 2187.4259133129
+ MSFT    | ORCL    | 8.8904775725744e-05 | 8.8950515633838e-05 | 5380.9043978136
+ ORCL    | AAPL    | 9.1238109813925e-05 |  9.129466989495e-05 | 2620.4161570065
+ ORCL    | HPQ     | 8.8466001280271e-05 | 8.8519316605637e-05 | 2636.6157514848
+ ORCL    | IBM     | 6.9767032763357e-05 | 6.9809134360948e-05 |  2118.091222525
+ ORCL    | MSFT    | 8.8904775725744e-05 | 8.8950515633838e-05 | 5380.9043978136
+(20 rows)
+
+Elapsed time: 0m1.049s
+
+
+
+---------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

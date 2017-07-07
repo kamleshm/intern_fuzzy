@@ -1,0 +1,66 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLPercentWin
+-----****************************************************************
+WITH z (pTxnDate,pGroupID,pTickerSymbol,pValue, pRankOrder) AS (
+SELECT a.TxnDate,a.TickerID, a.TickerSymbol, a.ClosePrice, 'D'
+FROM   finStockPrice a
+WHERE  a.TickerSymbol IN ('AAPL','HPQ','IBM','MSFT','ORCL')
+AND    a.TxnDate BETWEEN '2002-01-01' AND '2002-02-01')
+SELECT z.pTickerSymbol,
+       z.pTxnDate,
+       z.pGroupID,
+       z.pValue,
+       FLPercentWin(z.pValue) OVER(PARTITION BY z.pGroupID) AS Percentage
+FROM   z
+ORDER BY 1,2
+LIMIT 20;
+ PTICKERSYMBOL |  PTXNDATE  | PGROUPID | PVALUE |    PERCENTAGE     
+---------------+------------+----------+--------+-------------------
+ AAPL          | 2002-01-02 |        3 |   23.3 | 0.046679354903336
+ AAPL          | 2002-01-03 |        3 |  23.58 | 0.047240308524492
+ AAPL          | 2002-01-04 |        3 |  23.69 | 0.047460683161374
+ AAPL          | 2002-01-07 |        3 |   22.9 | 0.045877992587399
+ AAPL          | 2002-01-08 |        3 |  22.61 | 0.045297004908344
+ AAPL          | 2002-01-09 |        3 |  21.65 | 0.043373735350095
+ AAPL          | 2002-01-10 |        3 |  21.23 | 0.042532304918361
+ AAPL          | 2002-01-11 |        3 |  21.05 |  0.04217169187619
+ AAPL          | 2002-01-14 |        3 |  21.15 | 0.042372032455174
+ AAPL          | 2002-01-15 |        3 |   21.7 | 0.043473905639587
+ AAPL          | 2002-01-16 |        3 |  20.78 | 0.041630772312932
+ AAPL          | 2002-01-17 |        3 |  22.48 | 0.045036562155665
+ AAPL          | 2002-01-18 |        3 |  22.17 | 0.044415506360813
+ AAPL          | 2002-01-22 |        3 |  21.82 | 0.043714314334368
+ AAPL          | 2002-01-23 |        3 |  23.02 |  0.04611840128218
+ AAPL          | 2002-01-24 |        3 |  23.21 |  0.04649904838225
+ AAPL          | 2002-01-25 |        3 |  23.25 | 0.046579184613844
+ AAPL          | 2002-01-28 |        3 |  23.27 |  0.04661925272964
+ AAPL          | 2002-01-29 |        3 |  23.07 | 0.046218571571672
+ AAPL          | 2002-01-30 |        3 |  24.09 | 0.048262045477311
+(20 rows)
+
+Elapsed time: 0m0.197s
+
+
+
+---------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

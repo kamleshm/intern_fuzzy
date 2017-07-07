@@ -1,0 +1,66 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+-----****************************************************************
+---SP_Perc
+-----****************************************************************
+DROP TABLE FinStockPricePerc;
+DROP TABLE
+Elapsed time: 0m0.049s
+EXEC SP_Perc('FinStockPrice',
+             'CLOSEPRICE',
+             'TICKERSYMBOL',
+             '0.1,0.3,0.5,0.7,0.9',
+             'FinStockPricePerc');
+                                     SP_PERC                                     
+---------------------------------------------------------------------------------
+ Percentiles calculated successfully. Results stored in table FinStockPricePerc.
+(1 row)
+
+Elapsed time: 0m3.772s
+SELECT  *
+FROM    FinStockPricePerc
+LIMIT 20;
+ TICKERSYMBOL | PERC |   FLPERC   
+--------------+------+------------
+ ABS          | 0.3  |   29.56075
+ ACE          | 0.3  |      20.25
+ ADCT         | 0.3  |   4.336875
+ ADM          | 0.3  |      12.48
+ AEP          | 0.3  |      34.46
+ AHC          | 0.3  |     52.141
+ ALTR         | 0.3  |       9.75
+ AMD          | 0.3  |     9.1875
+ ANDW         | 0.3  |      16.53
+ AOC          | 0.3  |  23.330666
+ APD          | 0.3  |    32.6375
+ ASH          | 0.3  |      34.75
+ ASO          | 0.3  | 15.5317133
+ ATI          | 0.3  |    17.6265
+ AVP          | 0.3  |         30
+ AVY          | 0.3  |    41.1875
+ AXP          | 0.3  |   26.41667
+ BAC          | 0.3  |     49.684
+ BBY          | 0.3  |   4.739583
+ BC           | 0.3  |     20.125
+(20 rows)
+
+Elapsed time: 0m0.026s
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

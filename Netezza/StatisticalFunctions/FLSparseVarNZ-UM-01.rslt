@@ -1,0 +1,57 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLSparseVar
+-----****************************************************************
+SELECT a.MediaOutletID,
+       FLSparseVar(a.VarSum,
+                   a.VarSqSum,
+                   a.VarCount) AS FLSparseVar
+FROM( 
+     SELECT MediaOutletID,
+          SUM(Num_Val) AS VarSum,
+          SUM(Num_Val * Num_Val) AS VarSqSum,
+          9605 AS VarCount
+     FROM tblHomeSurveySparse
+     GROUP BY MediaOutletID
+    ) AS a
+WHERE  MediaOutletID <= 10
+ORDER BY 1;
+ MEDIAOUTLETID |    FLSPARSEVAR    
+---------------+-------------------
+             1 | 0.032500838514926
+             2 |  0.24236784473587
+             3 |  0.24380566747197
+             4 |  0.05628673719804
+             5 |  0.14682083055364
+             6 |  0.24954568426612
+             7 | 0.047575222973423
+             8 |  0.23604868351531
+             9 |  0.13794102795534
+            10 | 0.053804104267678
+(10 rows)
+
+Elapsed time: 0m0.112s
+
+
+
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

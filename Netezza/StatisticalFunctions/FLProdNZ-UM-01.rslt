@@ -1,0 +1,65 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLProd
+-----****************************************************************
+SELECT a.TickerSymbol,
+       EXTRACT(YEAR FROM b.TxnDate) AS CalendarYear,
+       COUNT(b.TxnDate) AS NumTxnDates,
+       FLProd(1.0 + LN(b.ClosePrice/a.ClosePrice)) - 1.0 AS AnnualReturn
+FROM finStockPrice a,
+     finStockPrice b
+WHERE a.TickerSymbol IN ('AAPL','HPQ','IBM','MSFT','ORCL')
+AND b.TickerID = a.TickerID
+AND b.DateIdx = a.DateIdx + 1
+GROUP BY a.TickerSymbol, EXTRACT(YEAR FROM b.TxnDate)
+ORDER BY 1,2
+LIMIT 20;
+ TICKERSYMBOL | CALENDARYEAR | NUMTXNDATES |    ANNUALRETURN     
+--------------+--------------+-------------+---------------------
+ AAPL         |         1995 |         252 |   -0.25145023775609
+ AAPL         |         1996 |         250 |   -0.28963857268172
+ AAPL         |         1997 |         253 |   -0.48073285227445
+ AAPL         |         1998 |         252 |     1.6053195256328
+ AAPL         |         1999 |         250 |     1.2115006087432
+ AAPL         |         2000 |         250 |   -0.86230509235204
+ AAPL         |         2001 |         248 |    0.21626727309525
+ AAPL         |         2002 |         252 |    -0.4206721191414
+ AAPL         |         2003 |         252 |    0.39379520564428
+ AAPL         |         2004 |          30 |   0.068830292919968
+ HPQ          |         1995 |         252 |    0.58546707840707
+ HPQ          |         1996 |         254 |    0.10037158310754
+ HPQ          |         1997 |         251 |    0.19544425515916
+ HPQ          |         1998 |         252 |  0.0059912984838986
+ HPQ          |         1999 |         252 |    0.45982708696345
+ HPQ          |         2000 |         252 |   -0.54584335203791
+ HPQ          |         2001 |         246 |   -0.44558295357156
+ HPQ          |         2002 |         252 |   -0.26174285276551
+ HPQ          |         2003 |         252 |    0.21745217799543
+ HPQ          |         2004 |          30 | -0.0057035934227464
+(20 rows)
+
+Elapsed time: 0m0.625s
+
+
+
+---------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

@@ -1,0 +1,63 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLEuclideanDist
+-----****************************************************************
+SELECT a.Country,
+       b.Country,
+       FLEuclideanDist(a.Consumption, b.Consumption) AS FLEuclideanDist
+FROM tblProteinConsump a,
+     tblProteinConsump b
+WHERE b.ProteinCode = a.ProteinCode
+AND b.CountryCode <> a.CountryCode
+GROUP BY a.Country, b.Country
+ORDER BY 1,2
+LIMIT 20;
+ COUNTRY |    COUNTRY     | FLEUCLIDEANDIST 
+---------+----------------+-----------------
+ Albania | Austria        | 23.176280978621
+ Albania | Belgium        | 21.650173209469
+ Albania | Bulgaria       | 15.688212135231
+ Albania | Czechoslovakia | 15.154537274361
+ Albania | Denmark        | 30.157586110297
+ Albania | E Germany      | 22.865913495857
+ Albania | Finland        | 30.990966425718
+ Albania | France         | 23.174123500146
+ Albania | Greece         | 12.136309158884
+ Albania | Hungary        | 13.157127346043
+ Albania | Ireland        | 27.902508847772
+ Albania | Italy          | 10.624499988235
+ Albania | Netherlands    | 28.302120061932
+ Albania | Norway         | 26.805409901734
+ Albania | Poland         | 17.643979143039
+ Albania | Portugal       | 23.111036324665
+ Albania | Romania        | 10.319399207318
+ Albania | Spain          | 17.149927113548
+ Albania | Sweden         |  29.98799759904
+ Albania | Switzerland    | 24.928898892651
+(20 rows)
+
+Elapsed time: 0m0.074s
+
+
+
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

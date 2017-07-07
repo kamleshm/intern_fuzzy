@@ -1,0 +1,63 @@
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+-- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Netezza
+--
+-- Copyright (c): 2016 Fuzzy Logix, LLC
+--
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Matrix Operations
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-----****************************************************************
+---FLMatrixInvStr
+-----****************************************************************
+SELECT FLMatrixInvStr(a.Row_ID, a.Col_ID, a.Cell_Val)
+OVER (PARTITION BY 1)
+FROM tblMatrixMulti a
+WHERE a.Matrix_ID = 5;
+                FLMATRIXINVSTR                
+----------------------------------------------
+ 2,1,-5.3490720921844329e-02                 
+ 3,3,1.2049213165564931e+00                  
+ 3,2,-4.2380019096278326e-01                 
+ 3,1,-8.7455075244212727e-02                 
+ 1,5,-5.7352284065735462e-02                 
+ 3,4,-5.6612219159467764e-02                 
+ 3,5,-1.0563956118019144e-01                 
+ 5,4,-8.2505847097132851e-02                 
+ 5,3,-1.0563956118019144e-01                 
+ 5,2,-2.5132743318559397e-01                 
+ 5,1,-5.7352284065735462e-02                 
+ 1,4,-4.9792878305253016e-02                 
+ 1,3,-8.7455075244212727e-02                 
+ 1,2,-5.3490720921844329e-02                 
+ 2,5,-2.5132743318559397e-01                 
+ 2,4,-1.2093698340202684e-01                 
+ 2,3,-4.2380019096278326e-01                 
+ 2,2,1.2629374279011780e+00                  
+ 4,1,-4.9792878305253016e-02                 
+ 4,2,-1.2093698340202684e-01                 
+ 1,1,1.0256887142930766e+00                  
+ 4,5,-8.2505847097132851e-02                 
+ 4,4,1.0410776960010575e+00                  
+ 4,3,-5.6612219159467764e-02                 
+ 5,5,1.1079144174514683e+00                  
+(25 rows)
+
+Elapsed time: 0m0.078s
+
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

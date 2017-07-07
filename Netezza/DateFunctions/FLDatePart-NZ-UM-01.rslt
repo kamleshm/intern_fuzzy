@@ -1,0 +1,68 @@
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+-- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Netezza
+--
+-- Copyright (c): 2016 Fuzzy Logix, LLC
+--
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade
+-- secret or copyright law. Dissemination of this information or reproduction of this material is
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+--      Test Category:              Date Functions
+--
+--      Last Updated:                   05-30-2017
+--
+--      Author:                         <kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----****************************************************************
+---FLDatePart
+-----****************************************************************
+SELECT  a.ObsID, 
+        a.DateIN1,
+        FLDatePart('yy', a.DateIN1) AS DatePartYear,
+        FLDatePart('qq', a.DateIN1) AS DatePartQuarter,
+        FLDatePart('mm', a.DateIN1) AS DatePartMonth,
+        FLDatePart('dy', a.DateIN1) AS DatePartDayOfYear,
+        FLDatePart('dd', a.DateIN1) AS DatePartDay,
+        FLDatePart('wk', a.DateIN1) AS DatePartWeek,
+        FLDatePart('dw', a.DateIN1) AS DatePartWeekday
+FROM    tblTestDate a
+ORDER BY 1;
+ OBSID |  DATEIN1   | DATEPARTYEAR | DATEPARTQUARTER | DATEPARTMONTH | DATEPARTDAYOFYEAR | DATEPARTDAY | DATEPARTWEEK | DATEPARTWEEKDAY 
+-------+------------+--------------+-----------------+---------------+-------------------+-------------+--------------+-----------------
+     1 | 2010-07-04 |         2010 |               3 |             7 |               185 |           4 |           28 |               1
+     2 | 2000-05-14 |         2000 |               2 |             5 |               135 |          14 |           21 |               1
+     3 | 2010-05-14 |         2010 |               2 |             5 |               134 |          14 |           20 |               6
+     4 | 2005-05-14 |         2005 |               2 |             5 |               134 |          14 |           20 |               7
+     5 | 2009-05-14 |         2009 |               2 |             5 |               134 |          14 |           20 |               5
+     6 | 2003-05-14 |         2003 |               2 |             5 |               134 |          14 |           20 |               4
+    11 | 2010-12-31 |         2010 |               4 |            12 |               365 |          31 |           53 |               6
+    12 | 2012-01-20 |         2012 |               1 |             1 |                20 |          20 |            3 |               6
+    15 | 2012-12-24 |         2012 |               4 |            12 |               359 |          24 |           52 |               2
+    19 | 2012-12-24 |         2012 |               4 |            12 |               359 |          24 |           52 |               2
+    20 | 2012-12-22 |         2012 |               4 |            12 |               357 |          22 |           51 |               7
+    21 | 2012-12-31 |         2012 |               4 |            12 |               366 |          31 |           53 |               2
+    30 | 1995-08-23 |         1995 |               3 |             8 |               235 |          23 |           34 |               4
+    31 | 1995-01-13 |         1995 |               1 |             1 |                13 |          13 |            2 |               6
+    32 | 1995-01-16 |         1995 |               1 |             1 |                16 |          16 |            3 |               2
+    33 | 1995-08-23 |         1995 |               3 |             8 |               235 |          23 |           34 |               4
+    34 | 1995-01-13 |         1995 |               1 |             1 |                13 |          13 |            2 |               6
+    35 | 1995-01-16 |         1995 |               1 |             1 |                16 |          16 |            3 |               2
+    36 | 1995-08-23 |         1995 |               3 |             8 |               235 |          23 |           34 |               4
+    37 | 1995-01-13 |         1995 |               1 |             1 |                13 |          13 |            2 |               6
+    38 | 1995-01-16 |         1995 |               1 |             1 |                16 |          16 |            3 |               2
+    40 | 2250-12-31 |         2250 |               4 |            12 |               365 |          31 |           53 |               3
+(22 rows)
+
+Elapsed time: 0m0.101s
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

@@ -1,0 +1,66 @@
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+-- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Netezza
+--
+-- Copyright (c): 2016 Fuzzy Logix, LLC
+--
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade
+-- secret or copyright law. Dissemination of this information or reproduction of this material is
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+--      Test Category:              Date Functions
+--
+--      Last Updated:                   05-30-2017
+--
+--      Author:                         <kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----****************************************************************
+---FLDateAdd
+-----****************************************************************
+SELECT  a.ObsID, 
+        a.DateIN1,
+        FLDateAdd('yy', 1, a.DateIN1) AS DateAddYear,
+        FLDateAdd('qq', 1, a.DateIN1) AS DateAddQuarter,
+        FLDateAdd('mm', 1, a.DateIN1) AS DateAddMonth,
+        FLDateAdd('wk', 1, a.DateIN1) AS DateAddWeek,
+        FLDateAdd('dd', 1, a.DateIN1) AS DateAddDay
+FROM    tblTestDate a
+ORDER BY 1;
+ OBSID |  DATEIN1   | DATEADDYEAR | DATEADDQUARTER | DATEADDMONTH | DATEADDWEEK | DATEADDDAY 
+-------+------------+-------------+----------------+--------------+-------------+------------
+     1 | 2010-07-04 | 2011-07-04  | 2010-10-04     | 2010-08-04   | 2010-07-11  | 2010-07-05
+     2 | 2000-05-14 | 2001-05-14  | 2000-08-14     | 2000-06-14   | 2000-05-21  | 2000-05-15
+     3 | 2010-05-14 | 2011-05-14  | 2010-08-14     | 2010-06-14   | 2010-05-21  | 2010-05-15
+     4 | 2005-05-14 | 2006-05-14  | 2005-08-14     | 2005-06-14   | 2005-05-21  | 2005-05-15
+     5 | 2009-05-14 | 2010-05-14  | 2009-08-14     | 2009-06-14   | 2009-05-21  | 2009-05-15
+     6 | 2003-05-14 | 2004-05-14  | 2003-08-14     | 2003-06-14   | 2003-05-21  | 2003-05-15
+    11 | 2010-12-31 | 2011-12-31  | 2011-03-31     | 2011-01-31   | 2011-01-07  | 2011-01-01
+    12 | 2012-01-20 | 2013-01-20  | 2012-04-20     | 2012-02-20   | 2012-01-27  | 2012-01-21
+    15 | 2012-12-24 | 2013-12-24  | 2013-03-24     | 2013-01-24   | 2012-12-31  | 2012-12-25
+    19 | 2012-12-24 | 2013-12-24  | 2013-03-24     | 2013-01-24   | 2012-12-31  | 2012-12-25
+    20 | 2012-12-22 | 2013-12-22  | 2013-03-22     | 2013-01-22   | 2012-12-29  | 2012-12-23
+    21 | 2012-12-31 | 2013-12-31  | 2013-03-31     | 2013-01-31   | 2013-01-07  | 2013-01-01
+    30 | 1995-08-23 | 1996-08-23  | 1995-11-23     | 1995-09-23   | 1995-08-30  | 1995-08-24
+    31 | 1995-01-13 | 1996-01-13  | 1995-04-13     | 1995-02-13   | 1995-01-20  | 1995-01-14
+    32 | 1995-01-16 | 1996-01-16  | 1995-04-16     | 1995-02-16   | 1995-01-23  | 1995-01-17
+    33 | 1995-08-23 | 1996-08-23  | 1995-11-23     | 1995-09-23   | 1995-08-30  | 1995-08-24
+    34 | 1995-01-13 | 1996-01-13  | 1995-04-13     | 1995-02-13   | 1995-01-20  | 1995-01-14
+    35 | 1995-01-16 | 1996-01-16  | 1995-04-16     | 1995-02-16   | 1995-01-23  | 1995-01-17
+    36 | 1995-08-23 | 1996-08-23  | 1995-11-23     | 1995-09-23   | 1995-08-30  | 1995-08-24
+    37 | 1995-01-13 | 1996-01-13  | 1995-04-13     | 1995-02-13   | 1995-01-20  | 1995-01-14
+    38 | 1995-01-16 | 1996-01-16  | 1995-04-16     | 1995-02-16   | 1995-01-23  | 1995-01-17
+    40 | 2250-12-31 | 2251-12-31  | 2251-03-31     | 2251-01-31   | 2251-01-07  | 2251-01-01
+(22 rows)
+
+Elapsed time: 0m0.065s
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

@@ -1,0 +1,47 @@
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Statistical Functions
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----*******************************************************************************************************************************
+---FLWtAvg
+-----****************************************************************
+SELECT a.TickerSymbol,
+       FLWtAvg(a.Volume, b.StockReturn) AS FLWtAvg
+FROM finStockPrice a,
+     finStockReturns b
+WHERE b.TickerID = a.TickerID
+AND b.DateIdx = a.DateIdx
+AND a.TickerSymbol IN ('AAPL','HPQ','IBM','MSFT','ORCL')
+GROUP BY a.TickerSymbol
+ORDER BY 1;
+ TICKERSYMBOL |       FLWTAVG       
+--------------+---------------------
+ AAPL         | -0.0002323387298544
+ HPQ          | 0.00016242784941783
+ IBM          | 0.00050695946040315
+ MSFT         | 0.00054009989047311
+ ORCL         |  0.0010655084187511
+(5 rows)
+
+Elapsed time: 0m0.366s
+
+
+
+---------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

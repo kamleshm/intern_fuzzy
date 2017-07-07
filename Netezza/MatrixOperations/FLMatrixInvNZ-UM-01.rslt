@@ -1,0 +1,70 @@
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+-- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Netezza
+--
+-- Copyright (c): 2016 Fuzzy Logix, LLC
+--
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Matrix Operations
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-----****************************************************************
+---FLMatrixInv
+-----****************************************************************
+SELECT a.Row_ID,
+       a.Col_ID,
+       FLMatrixInv(a.Row_ID, a.Col_ID, a.Cell_Val)
+OVER (PARTITION BY 1) AS Inverse
+FROM tblMatrixMulti a
+WHERE a.Matrix_ID = 5
+ORDER BY 1, 2;
+ ROW_ID | COL_ID |      INVERSE       
+--------+--------+--------------------
+      1 |      1 |    1.0256887142931
+      1 |      2 | -0.053490720921844
+      1 |      3 | -0.087455075244213
+      1 |      4 | -0.049792878305253
+      1 |      5 | -0.057352284065735
+      2 |      1 | -0.053490720921844
+      2 |      2 |    1.2629374279012
+      2 |      3 |  -0.42380019096278
+      2 |      4 |  -0.12093698340203
+      2 |      5 |  -0.25132743318559
+      3 |      1 | -0.087455075244213
+      3 |      2 |  -0.42380019096278
+      3 |      3 |    1.2049213165565
+      3 |      4 | -0.056612219159468
+      3 |      5 |  -0.10563956118019
+      4 |      1 | -0.049792878305253
+      4 |      2 |  -0.12093698340203
+      4 |      3 | -0.056612219159468
+      4 |      4 |    1.0410776960011
+      4 |      5 | -0.082505847097133
+      5 |      1 | -0.057352284065735
+      5 |      2 |  -0.25132743318559
+      5 |      3 |  -0.10563956118019
+      5 |      4 | -0.082505847097133
+      5 |      5 |    1.1079144174515
+(25 rows)
+
+Elapsed time: 0m0.109s
+
+
+
+
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

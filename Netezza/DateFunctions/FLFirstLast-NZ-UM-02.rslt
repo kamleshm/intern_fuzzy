@@ -1,0 +1,62 @@
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+-- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Netezza
+--
+-- Copyright (c): 2016 Fuzzy Logix, LLC
+--
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade
+-- secret or copyright law. Dissemination of this information or reproduction of this material is
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+--      Test Category:              Date Functions
+--
+--      Last Updated:                   05-30-2017
+--
+--      Author:                         <kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-- BEGIN: TEST(s)
+-----****************************************************************
+---FLFirstLast
+-----****************************************************************
+SELECT a.DateIN1,
+       FLFirstLast('L', a.DateTS1, a.ObsId) OVER(PARTITION BY a.DateIN1 ORDER BY a.DateIN1) AS
+ LastOccurance
+FROM tblTestDate a
+ORDER BY 1;
+  DATEIN1   | LASTOCCURANCE 
+------------+---------------
+ 1995-01-13 |            34
+ 1995-01-13 |            34
+ 1995-01-13 |            34
+ 1995-01-16 |            38
+ 1995-01-16 |            38
+ 1995-01-16 |            38
+ 1995-08-23 |            30
+ 1995-08-23 |            30
+ 1995-08-23 |            30
+ 2000-05-14 |             2
+ 2003-05-14 |             6
+ 2005-05-14 |             4
+ 2009-05-14 |             5
+ 2010-05-14 |             3
+ 2010-07-04 |             1
+ 2010-12-31 |            11
+ 2012-01-20 |            12
+ 2012-12-22 |            20
+ 2012-12-24 |            19
+ 2012-12-24 |            19
+ 2012-12-31 |            21
+ 2250-12-31 |            40
+(22 rows)
+
+Elapsed time: 0m0.090s
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT

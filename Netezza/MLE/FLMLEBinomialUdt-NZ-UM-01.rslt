@@ -1,0 +1,60 @@
+--INFO: Reading startup configuration from file PulsarLogOn.act_ssl_config
+-- Fuzzy Logix, LLC: Functional Testing Script for DB Lytix functions on Netezza
+--
+-- Copyright (c): 2016 Fuzzy Logix, LLC
+--
+-- The intellectual and technical concepts contained herein are proprietary to Fuzzy Logix, LLC.
+-- and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade 
+-- secret or copyright law. Dissemination of this information or reproduction of this material is 
+-- strictly forbidden unless prior written permission is obtained from Fuzzy Logix, LLC.
+-- Functional Test Specifications:
+--
+-- 	Test Category:		    Maximum Likelihood Estimation of Distribution Parameters
+--
+--	Last Updated:			05-30-2017
+--
+--	Author:			    	<kamlesh.meena@fuzzyl.com>
+--
+-- BEGIN: TEST SCRIPT
+\time
+Query time printout on
+-----****************************************************************
+---FLMLEBinomialUdt
+-----****************************************************************
+CREATE VIEW view_binom_1000 AS
+SELECT 1 AS GroupID, 
+       5 AS NumOfTrials, 
+       FLSimBinomial(a.RandVal, 0.77, 5) AS NumVal
+FROM fzzlSerial a
+WHERE a.SerialVal <= 1000;
+CREATE VIEW
+Elapsed time: 0m0.024s
+SELECT a.*
+FROM(SELECT vw.GroupID, 
+            vw.NumOfTrials ,
+            vw.NumVal,
+            NVL(LAG(0) OVER (PARTITION BY vw.GroupID ORDER BY            
+            vw.GroupID), 1) AS begin_flag, 
+            NVL(LEAD(0) OVER (PARTITION BY vw.GroupID ORDER BY           
+            vw.GroupID), 1) AS end_flag 
+FROM view_binom_1000 vw) AS z,
+TABLE(FLMLEBinomialUdt(z.GroupID, 
+                       z.NumOfTrials, 
+                       z.NumVal, 
+                       z.begin_flag, 
+                       z.end_flag)) AS a;
+ GROUPID |  PROB  |  LOGLIKELIHOOD   |    VARPROB    
+---------+--------+------------------+---------------
+       1 | 0.7714 | -1300.4568211237 | 3.5268408e-05
+(1 row)
+
+Elapsed time: 0m0.114s
+DROP VIEW view_binom_1000;
+DROP VIEW
+Elapsed time: 0m0.008s
+-------------------------------------------------------------------------------------
+-----****************************************************************
+-- END: TEST (s)
+\time
+Query time printout off
+--END: TEST SCRIPT
