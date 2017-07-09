@@ -1,0 +1,114 @@
+########################################################################################################################
+# Usage: 
+# To run one or more tests:
+#         make -f makefile.pulsar UNITTEST='FLFXOptPrice-Aster-01.tst FLIROptPrice-Aster-01.tst...' AUTOTST 
+# To run one or more Categories:
+#         make -f makefile.pulsar TESTCAT='FLIRSimulations-Fin-Aster FLIROptions-Fin-Aster..' AUTOTST 
+#
+# To generate rslt files for one or more tests:
+#         make -f makefile.pulsar UNITTEST='FLFXOptPrice-Aster-01.tst FLIROptPrice-Aster-01.tst..' AUTOREF 
+# To generate rslt files for one or more Categories:
+#         make -f makefile.pulsar TESTCAT='FLIRSimulations-Fin-Aster FLIROptions-Fin-Aster..' AUTOREF 
+#  
+# To generate rslt files for all
+#        make -f makefile.pulsar ALL='TRUE'
+#   use the -B options to overwrite files that might already be existing
+#
+#########################################################################################################################
+
+#DIFF_FILE:=$(shell mktemp)
+
+#Specify the paths to all the required directories 
+#REFDIR=../AutoUnitTests/REF
+#TSTDIR=../AutoUnitTests
+#OUTDIR=../AutoUnitTests/OUT
+#LOGDIR=../AutoUnitTests/LOG
+
+REFDIR:= ${CURDIR}/REF
+TSTDIR:= ${CURDIR}
+OUTDIR:= ${CURDIR}/OUT
+LOGDIR:= ${CURDIR}/LOG
+
+$(shell mkdir -p $(LOGDIR))
+
+TIMESTAMP:=$(shell date +'%Y-%m-%d-%H%M%S')
+TSTLOG:=$(LOGDIR)/PulsarTST.$(TIMESTAMP).log
+REFLOG:=$(LOGDIR)/PulsarREF.$(TIMESTAMP).log
+
+#Display error in case user writes UNITEST in place of UNITTEST
+ifneq ($(UNITEST),) 
+    $(error "'UNITEST' looks like a typo.  Please try 'UNITTEST' with 2 Ts.")
+endif
+
+#In case UNITTEST is empty
+ifeq ($(UNITTEST),)
+	#In case TESTCAT is also empty
+    ifeq ($(TESTCAT),)
+    	#Look for all the tests in the Test Directory
+		ifeq ($(ALL), TRUE) 
+			ALL_TST= $(shell find $(TSTDIR) -name "*.tst")
+		else
+            $(error "Error: Check pulsar command.")
+		endif
+    #In case TESTCAT is specified
+    else
+    	#Look for tests in the folder specific to that category
+        TMPCMD=$(patsubst %, $(TSTDIR)/%, $(TESTCAT))
+        ALL_TST=$(shell find $(TMPCMD) -name "*.tst")      
+    endif    
+#In case UNITEST is specified
+else
+	#Look for tests with that specific name for running
+	TMPCMD=$(patsubst %, -o -name "%", $(UNITTEST))
+	ALL_TST=$(shell find $(TSTDIR) -name @@ $(TMPCMD))
+	#ALL_TST=$(shell find $(TSTDIR) -name "$(UNITTEST)")
+endif
+
+
+ALL_OUT=$(patsubst $(TSTDIR)/%.tst, $(OUTDIR)/%.out,  $(ALL_TST))
+ALL_REF=$(patsubst $(TSTDIR)/%.tst, $(REFDIR)/%.rslt, $(ALL_TST))
+
+#Block for creating the log file and the .out files from the corresponding .tst files 
+$(OUTDIR)/%.out: $(TSTDIR)/%.tst
+	@echo "                                              "
+	@echo "Logging to $(TSTLOG) ..."
+	@echo "$(basename $(notdir $<)) : 01 : ---- $< ----"                  2>&1 |tee -a $(TSTLOG)
+	@echo "$(basename $(notdir $<)) : 02 :     --- START: `date`" 2>&1 |tee -a $(TSTLOG)
+	@echo "$(basename $(notdir $<)) : 03 :     ==> $@" 2>&1 |tee -a $(TSTLOG)
+	@mkdir -p $(dir $@) 2>&1 |tee -a $(TSTLOG) |tee -a $(TSTLOG)
+	nzsql -a -f $<  1>$@ 2>&1 ; ./PulsarReport.sh $@  2>&1 |tee -a $(TSTLOG)
+	@echo "$(basename $(notdir $<)) : 06 :     --- END: `date`" 2>&1 |tee -a $(TSTLOG)
+	@echo "$(basename $(notdir $<)) : 07 : -----------------------------------------------------" 2>&1 |tee -a $(TSTLOG)
+
+$(REFDIR)/%.rslt: $(TSTDIR)/%.tst
+	@echo "                                              "
+	@echo "Logging to $(REFLOG) ..."
+	@echo "$(basename $(notdir $<)) : 01 : ---- $< ----"                  2>&1 |tee -a $(REFLOG)
+	@echo "$(basename $(notdir $<)) : 02 :     --- START: `date`" 2>&1 |tee -a $(REFLOG)
+	@echo "$(basename $(notdir $<)) : 03 :     ==> $@" 2>&1 |tee -a $(REFLOG)
+	@mkdir -p $(dir $@) 2>&1 |tee -a $(REFLOG) |tee -a $(REFLOG)
+	nzsql -a -f $<  1>$@ 2>&1 || true
+	@echo "$(basename $(notdir $<)) : 06 :     --- END: `date`" 2>&1 |tee -a $(REFLOG)
+	@echo "$(basename $(notdir $<)) : 07 : -----------------------------------------------------" 2>&1 |tee -a $(REFLOG)
+
+#@echo "---- '$<' => '$@' ----"
+#@echo "------------------------------------------------------------------------"
+
+
+AUTOTST: $(ALL_OUT)
+
+AUTOREF: $(ALL_REF)
+
+#clean: 
+#   $(REMOVE) $(all_exes) 
+#
+
+
+
+
+
+
+
+
+
+

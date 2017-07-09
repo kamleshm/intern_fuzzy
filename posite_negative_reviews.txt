@@ -1,31 +1,31 @@
 1. Mathematical 
-1.1 FLCAP
-	No error message for NULL value passed:
-	SELECT FLCap(NULL, 3.0) AS Cap;
-	SELECT FLCap(5.0, NULL) AS Cap;
+1.1 FLCAP x
+	No error message for NULL value passed: 
+	SELECT FLCap(NULL, 3.0) AS Cap; 
+	SELECT FLCap(5.0, NULL) AS Cap;  
 
-1.2 FLCOllar
+1.2 FLCOllar x 
 	No error message for NULL value passed:
 	SELECT FLCollar(NULL, -5.0, 5.0) AS Collar;
 	SELECT FLCollar(39.0, NULL, 5.0) AS Collar;
 	SELECT FLCollar(39.0, -5.0, NULL) AS Collar;
 	
-1.3 FLGammaLn
+1.3 FLGammaLn  x
 	1) Positive Test 3: Should Output 0
-		SELECT FLGammaLn(2) AS GammaLn;  returns  -1.7763568394003e-15 instead of zero as in TD
+		SELECT FLGammaLn(2) AS GammaLn;  returns  -1.7763568394003e-15 instead of zero as in TD    
 	2)--- Return expected error, Good
-		SELECT FLGammaLn(0) AS GammaLn; return "Infinity" instead of error message as in TD
-	3)No error message for NULL value passed as in TD
+		SELECT FLGammaLn(0) AS GammaLn; return "Infinity" instead of error message as in TD 
+	3)No error message for NULL value passed as in TD   
 		SELECT FLGammaLn(NULL) AS GammaLn;
 	
-1.4 FLFLoor
+1.4 FLFLoor x
 	1)SELECT FLFloor(5.0 * 1e-400, 3.0 * 1e-400) AS FLoor return 0 instead of error message as in TD
 	2)No error message for NULL value passed as in TD
 	SELECT FLFloor(NULL, 3.0) AS FLoor;
 	SELECT FLFloor(5.0, NULL) AS FLoor;
 
 2. Statistical 
-2.1 FLCOrrel
+2.1 FLCOrrel x
 	1)commented query was uncommented :;
 		SELECT COUNT(*) AS CNT,
 			CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
@@ -33,244 +33,180 @@
 	2)Negative Test 5: No error was given (e-400)
 
 2.2 FLCount
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
-	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ==> No error message received and the query executed successfully
+	1)---- Negative Test 2b: Invalid Data Type: Input VarChar ==> No error message received and the query executed successfully
 
-2.3 No script for FLCountIf
+2.3 No script for FLCountIf: to be created
 
 2.4 FLCountNeg
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
 	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
 
-2.5 FLCountNull
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
+2.5 FLCountNull 
 	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
 
-2.6 FLCountPos
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
+2.6 FLCountPos 
 	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
 	
-2.7 FLCountZero
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
+2.7 FLCountZero 
 	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
 	
-2.8 FLCovar
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
+2.8 FLCovar x 
 	2)Negative Test 4: Value(Double Precision) out of range: Sample Covariance of 1.0e-400 * Value ==> No error message received and the query executed successfully
 	
-2.9 FLCovarP
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-		   CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
+2.9 FLCovarP :to be edited
 	2)COVAR_POP doesnot exist 
 
-2.10 FLDevSq
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   tblCustData a;
+2.10 FLDevSq 
 	2)Positive Test 8: Add a very large number, Results should not change
 		Results does not match with TD results
-	3)Negative Test 3: Value(Double Precision) out of range: Deviation Square of 1.0e-400 * Value ==>No error message received and the query executed successfully
+	3)Negative Test 3: Value(Double Precision) out of range: Deviation Square of 1.0e-400 * Value ==>No error message received and the query executed successfully    x
 	
-2.1.11 FLGeoMean
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   tblCustData a;
+2.1.11 FLGeoMean x
 	2) Negative Test 5: Value(Double Precision) out of range: Geo Mean of 1.0e-400 * Value ===> incorrect error message is printed i.e "The value must be greater than zero." 
 	
-2.1.12 FLHarMean
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   tblCustData a;
+2.1.12 FLHarMean  x
 	2)Negative Test 5: Value(Double Precision) out of range: Geo Mean of 1.0e-400 * Value ===> incorrect error message is printed i.e "The value must be greater than zero."
 	
-2.1.13 FLMean
-	1)commented query was uncommented :
-	 SELECT COUNT(*) AS CNT,
-       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   finEquityReturns a;
+2.1.13 FLMean x
 	2)Negative Test 3: Value(Double Precision) out of range: Mean of 1.0e-400 * Value ==> No error message received and the query executed successfully
 	
-2.1.14 FLKurtosis
-	1)commented query was uncommented :
-	SELECT COUNT(*) AS CNT,
-       CASE WHEN CNT = 0 THEN ' Please Load Test Data!!! ' ELSE ' Test Data Loaded ' END AS TestOutcome
-	FROM   fzzlSerial a;
+2.1.14 FLKurtosis 
 	2)---- Positive Test 7: Gives error  Float8 result is a NaN
-	3)---- Positive Test 8 : -do-  , same occured in TD also
-	4)---- Positive Test 9 : -do- , -do-
-	5)---- Negative Test 4: Value(Double Precision) out of range: Kurtosis of 1.0e-400 * Value ====> gives incorrect error message i.e " Float8 result is a NaN"
+	3)---- Positive Test 8 : -do-  , same occured in TD also 	x
+	4)---- Positive Test 9 : -do- , 	x
+	5)---- Negative Test 4: Value(Double Precision) out of range: Kurtosis of 1.0e-400 * Value ====> gives incorrect error message i.e " Float8 result is a NaN"	x
 
 2.1.15 FLMax
-	1)commented query was uncommented
+ 
 	2) Negative Test 1: No data ===> Non-Null value is returned i.e ( "0" )
 	3)Negative Test 2b: Invalid Data type: Input VarChar ==> No error message returned and query exits successfully
 	
 2.1.16 FLMedianWin
-	1)commented query was uncommented
-	2)Negative Test 3: Value(Double Precision) out of range: Median of 1.0e-400 * Value ==> No error message returned and query exits successfully
+	2)Negative Test 3: Value(Double Precision) out of range: Median of 1.0e-400 * Value ==> No error message returned and query exits successfully x
 	3)---- Negative Test 4: Invalid Data Type: Input Varchar
 		Query was edited to remove syntax error and also to match the testing purpose i.e (invalid data type)
 		But the quey runs without giving any error
 	
 2.1.17 FLMin
-	1)commented query was uncommented
 	2)Negative Test 2b: Invalid Data type: Input VarChar for 2nd Argument ====> query runs successfully without error
 
-2.1.18 FLNTileWin
+2.1.18 FLNTileWin x
 	None
 	
-2.1.19 FLPercWin
-	1)commented query was uncommented
-	2)---- Positive Test 3: Positive test cases, Results should be 50.5, Compared with FLMedianWin()==> FLPercWin() argument was changed from 0.75 to 0.50 to match the testing purpose
-	3)---- Negative Test 3: Value(Double Precision) out of range: Percentile of 1.0e-400 * Value ===> No error message returned and query exits successfully
+2.1.19 FLPercWin 
+	2)---- Positive Test 3: Positive test cases, Results should be 50.5, Compared with FLMedianWin()==> FLPercWin() argument was changed from 0.75 to 0.50 to match the testing purpose  x
+	3)---- Negative Test 3: Value(Double Precision) out of range: Percentile of 1.0e-400 * Value ===> No error message returned and query exits successfully  x
 	4)---- Negative Test 4: Invalid Data Type:Input Varchar ===> No error message returned and query exits successfully
 	
-2.1.20 FLPercentWin
+2.1.20 FLPercentWin x
 	None
 	
-2.1.21 FLProd
-	1)commented query was uncommented
-	2)Positive Test 5: Multiply by a very large number, results should be 1e300* Product of Value which is out of boundary of double ===> Returned "infinity" without any error message .Such query should be placed in Negative tests
-	3)---- Negative Test 3: Value(Double Precision) out of range: Product of 1.0e-400 * Value ====> query runs successfully without error
+2.1.21 FLProd x
+	2)Positive Test 5: Multiply by a very large number, results should be 1e300* Product of Value which is out of boundary of double ===> Returned "infinity" without any error message .Such query should be placed in Negative tests  x
+	3)---- Negative Test 3: Value(Double Precision) out of range: Product of 1.0e-400 * Value ====> query runs successfully without error x
 	
-2.1.22 FLRank
-	1)commented query was uncommented
-	2)Positive Test 2 - 12 are added
+2.1.22 FLRank 
+	2)Positive Test 2 - 12 are added x
 	3)---- Positive Test 6: Mix With Nulls ======> query fails to handle the case with NULL and goes to infinite running loop
 	4) Positive Test 12: Add a very large number, Results should not change ====> results changed and rank =1 is assigned to all values
-	5)---- Negative Test 5: Value(Double Precision) out of range: Percent Rank of 1.0e-400 * Value ===>query runs successfully without error
+	5)---- Negative Test 5: Value(Double Precision) out of range: Percent Rank of 1.0e-400 * Value ===>query runs successfully without error x
 	6)---- Negative Test 6: Invalid Data Type: Input Varchar Value ===>  No error message returned and query exits successfully
 
-2.1.23 FLSkewness
-	1)commented query was uncommented
+2.1.23 FLSkewness 
 	2)Positive Test 3b: Adding large value 1e10 ===> should be kept in Negative test as error message is expected from the query
 	3)---- Positive Test 4: Test when input small number close to zero, Results should not change ====> query fails giving error for NaN 
 	4)---- Negative Test 4: Value(Double Precision) out of range: Skewness of 1.0e-400 * Value ===> query fails giving NaN error which is not expected
 
-2.1.24 FLStdDev
-	1)commented query was uncommented
+2.1.24 FLStdDev x
 	2)---- Negative Test 4: Value(Double Precision) out of range: Standard Deviation of 1.0e-400 * Value ====> query runs successfully without error
 
-2.1.25 FLStdDevP
-	1)commented query was uncommented
+2.1.25 FLStdDevP x
 	2)---- Negative Test 3: Value(Double Precision) out of range: Population Standard Deviation of 1.0e-400 * Value ====> query runs successfully without error
 	
-2.1.26 FLSum
-	1)commented query was uncommented
+2.1.26 FLSum x
 	2)---- Negative Test 3: Value(Double Precision) out of range: SUM of 1.0e-400 * Value ====> query runs successfully without error
 	
-2.1.27 FLSumProd
-	1)commented query was uncommented
+2.1.27 FLSumProd x
 	2)---- Negative Test 3: value(Double Precision) out of range: Sum of the Products of 1.0e-400 * Value ====> query runs successfully without error
 
-2.1.28 FLVar
-	1)commented query was uncommented
+2.1.28 FLVar x
 	2)---- Negative Test 4: Value(Double Precision) out of range: Variance of 1.0e-400 * Value ====> query runs successfully without error
 	
-2.1.29 FLVarP
-	1)commented query was uncommented
+2.1.29 FLVarP x
 	2)---- Negative Test 3: Value(Double Precision) out of range: Variance of 1.0e-400 * Value ====> query runs successfully without error
 	
-2.1.30 FLWtAvg
-	1)commented query was uncommented
-	2)---- Negative Test 1: No data ===> return error which is not expected
-	3)---- Negative Test 2: 0 weighting  ===> return error which is not expected
-	4)---- Negative Test 5: Value(Double Precision) out of range: Weighted Mean of 1.0e-400 * Value ====> query runs successfully without error
+2.1.30 FLWtAvg x
+	2)---- Negative Test 1: No data ===> return error which is not expected  x
+	3)---- Negative Test 2: 0 weighting  ===> return error which is not expected x
+	4)---- Negative Test 5: Value(Double Precision) out of range: Weighted Mean of 1.0e-400 * Value ====> query runs successfully without error x
 	
-2.1.31 FLWtCovar
-	1)commented query was uncommented
+2.1.31 FLWtCovar 
 	2)---- Negative Test 3: No data ===> return error which is not expected
-	3)---- Negative Test 4 ====> error message printed need to be edited for method 2 and 3
-	4)---- Negative Test 6: Value(Double Precision) out of range: Weighted Covariance of 1.0e-400 * Value ====> query runs successfully without error
+	3)---- Negative Test 4 ====> error message printed need to be edited for method 2 and 3  x
+	4)---- Negative Test 6: Value(Double Precision) out of range: Weighted Covariance of 1.0e-400 * Value ====> query runs successfully without error x
 	
-2.1.32 FLWtStdDev
-	1)commented query was uncommented
+2.1.32 FLWtStdDev 
 	2)---- Positive Test 2: Weighted Standard Dev of -1.0 * Value, Results should not change ===> Gives error "The sum of weights must be positive."
-	3)---- Negative Test 1: No data ===> gives error "The sum of weights must be positive." but NULL output is expected
-	4)---- Negative Test 5: Value(Double Precision) out of range: Weighted Standard Dev of 1.0e-400 * Value  ==> query ended without error in 5a and with error:"The sum of weights must be positive." in 5b. 
+	3)---- Negative Test 1: No data ===> gives error "The sum of weights must be positive." but NULL output is expected 
+	4)---- Negative Test 5: Value(Double Precision) out of range: Weighted Standard Dev of 1.0e-400 * Value  ==> query ended without error in 5a and with error:"The sum of weights must be positive." in 5b. x
 	
-2.1.33 FLWtVar
-	1)commented query was uncommented
-	2) ---- Positive Test 2: Weighted Variance of -1.0 * Value ===> Gives error "The sum of weights must be positive."
-	3)---- Negative Test 1: No data ===> gives error "The sum of weights must be positive." but NULL output is expected
-	4)---- Negative Test 2: 0 weighting ===> gives error "The sum of weights must be positive." but NULL output is expected
-	5)---- Negative Test 3: Sum(weightings) = 0; Sum(-1 , -2 , 3) =0  ===> gives error "The sum of weights must be positive." but NULL output is expected
-	6) ---- Negative Test 5: Value(Double Precision) out of range: Weighted Variance of 1.0e-400 * Value  ==> query ended without error in 5a and with error:"The sum of weights must be positive." in 5b. 
+2.1.33 FLWtVar 
+	#2) ---- Positive Test 2: Weighted Variance of -1.0 * Value ===> Gives error "The sum of weights must be positive."
+	#3)---- Negative Test 1: No data ===> gives error "The sum of weights must be positive." but NULL output is expected
+	#4)---- Negative Test 2: 0 weighting ===> gives error "The sum of weights must be positive." but NULL output is expected
+	#5)---- Negative Test 3: Sum(weightings) = 0; Sum(-1 , -2 , 3) =0  ===> gives error "The sum of weights must be positive." but NULL output is expected
+	@6) ---- Negative Test 5: Value(Double Precision) out of range: Weighted Variance of 1.0e-400 * Value  ==> query ended without error in 5a and with error:"The sum of weights must be positive." in 5b. 
 	
 4
 4.1 FLClearStr
-	1)SELECT FLCleanStr(NULL); ===> does not through error
-	2)SELECT FLCleanStr(1234);=====> query ended without error but error:"'FLCleanStr' called with an invalid number or type of parameters" is expected 
+	@1)SELECT FLCleanStr(NULL); ===> does not through error
+	#2)SELECT FLCleanStr(1234);=====> query ended without error but error:"'FLCleanStr' called with an invalid number or type of parameters" is expected 
 	
 4.2 FLConcatStr
-	1)FLConcatStr(NULL,'|') ===> through error message message indicating a constraint for this function.But in manual no such constraints are listed
-	2)Negative Test 3: Invalid Input For Delimiter ====> No error  message printed for using "" as delimiter
-	3)Negative test case 3 :using  more than 1 character as delimiter ====> No error message printed
+	$1)FLConcatStr(NULL,'|') ===> through error message message indicating a constraint for this function.But in manual no such constraints are listed
+	#2)Negative Test 3: Invalid Input For Delimiter ====> No error  message printed for using "" as delimiter
+	3)Negative test case 3 :using  more than 1 character as delimiter ====> No error message printed	 x
 	
-4.3 FLDLevenshteinDist
-	1)--Case 1c NULL check: ===> No error message returned and query exits successfully
-	2)-Case 2b NULL check: ===> No error message returned and query exits successfully
-	3)--Case 3b NULL check: ====>No error message returned and query exits successfully
-	4)--Case 5a NULL check: ====>No error message returned and query exits successfully
+4.3 FLDLevenshteinDist x
+	1)--Case 1c NULL check: ===> No error message returned and query exits successfully x
+	2)--Case 2b NULL check: ===> No error message returned and query exits successfully x 
+	3)--Case 3b NULL check: ====>No error message returned and query exits successfully x
+	4)--Case 5a NULL check: ====>No error message returned and query exits successfully x
 
 	
-4.4 FLExtractStr
-	1)Negative Test 2: Invalid (Null and Empty) Input for Parameters ===> no error message for "Null"
-	2)No error message for query : "SELECT FLExtractStr('Home Depot|WAL-MART|DUANE|MARTHA|WALMART| DWAYNE|MARHTA|','|',5.3) AS ExtractPos5;"
+4.4 FLExtractStr x
+	%1)Negative Test 2: Invalid (Null and Empty) Input for Parameters ===> no error message for "Null" x
+	2)No error message for query : "SELECT FLExtractStr('Home Depot|WAL-MART|DUANE|MARTHA|WALMART| DWAYNE|MARHTA|','|',5.3) AS ExtractPos5;" x
 	
 4.5 FLGetflat : No corresponding script found in TD
-	1)Fails in boundary test by query : "SELECT FLGetFlat(12,'one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve');"
-	2)Expected " Argument number out of range" as error message but got "Expected string,  st_geometry, or varbinary argument" as error message for query:"SELECT FLGetFlat(0,'one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve');"
-	3)-- Negative test 2: invalid data types: ===> no error messaage like "invalid data types" printed
+	#1)Fails in boundary test by query : "SELECT FLGetFlat(12,'one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve');"
+	#2)Expected " Argument number out of range" as error message but got "Expected string,  st_geometry, or varbinary argument" as error message for query:"SELECT FLGetFlat(0,'one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve');"
+	#3)-- Negative test 2: invalid data types: ===> no error messaage like "invalid data types" printed
 	
-4.6 FLHammingDist
-	1) -Case 1c NULL check: ===> No error message returned and query exits successfully
-	2)--Case 2b NULL check: ===> No error message returned and query exits successfully
-	3)--Case 3b NULL check: ====>No error message returned and query exits successfully
-	4)--Case 4a NULL check: ====>No error message returned and query exits successfully
-	5)--Case 5a ALL NULL check: ====>No error message returned and query exits successfully
+4.6 FLHammingDist x
+	1) -Case 1c NULL check: ===> No error message returned and query exits successfully	x
+	2)--Case 2b NULL check: ===> No error message returned and query exits successfully x
+	3)--Case 3b NULL check: ====>No error message returned and query exits successfully x
+	4)--Case 4a NULL check: ====>No error message returned and query exits successfully x
+	5)--Case 5a ALL NULL check: ====>No error message returned and query exits successfully x
 
-4.7 FLInStr
+4.7 FLInStr x
 	Newly created
 	
 4.8 FLIsNumeric
-	1)--- Negative Test 1: Null and Empty Input ==> No results or error message returned
-	2) ---- Negative Test 2: check for input overflow =========> No overflow error messaage returned
+	1)--- Negative Test 1: Null and Empty Input ==> No results or error message returned x
+	#2) ---- Negative Test 2: check for input overflow =========> No overflow error messaage returned
 	
-4.9 FLJaroScore
+4.9 FLJaroScore x
+	1)--Case 1b NULL check: ===> No error message returned and query exits successfully 
+	2)--Case 2b NULL check: ===> No error message returned and query exits successfully
+	3)--Case 4a All Nulls check: ===> No error message returned and query exits successfully
+	
+4.10 FLJaroWrinklerScore x
 	1)--Case 1b NULL check: ===> No error message returned and query exits successfully
 	2)--Case 2b NULL check: ===> No error message returned and query exits successfully
 	3)--Case 4a All Nulls check: ===> No error message returned and query exits successfully
 	
-4.10 FLJaroWrinklerScore
-	1)--Case 1b NULL check: ===> No error message returned and query exits successfully
-	2)--Case 2b NULL check: ===> No error message returned and query exits successfully
-	3)--Case 4a All Nulls check: ===> No error message returned and query exits successfully
-	
-4.11 FLLastValue
+4.11 FLLastValue 
 	No comments
 	
 4.12 FLRegExp_Like
@@ -280,27 +216,27 @@
 	No comments
 	
 4.14 FLStrReplace
-	1)SELECT FLStrReplace('OneTwoThreeFour', '', 'TwoAndHalf')=======> Return error although it is positive test
-	2)-- Negative test 1: invalid data types ========> No error message received
+	#1)SELECT FLStrReplace('OneTwoThreeFour', '', 'TwoAndHalf')=======> Return error although it is positive test
+	2)-- Negative test 1: invalid data types ========> No error message received x
 
 4.15 FLStrTok
 	No comments
 	
 5.2
 5.2.1 FLInvCDFBeta
-	1)--  Case 1b ====> error message occured for positive test
-	2)--  Case 1e ====> no error occured for using argument value less than e-307
-	3)-- Case 1i ====> no error occured for using argument value less than e-307
+	#1)--  Case 1b ====> error message occured for positive test
+	$2)--  Case 1e ====> no error occured for using argument value less than e-307
+	$3)-- Case 1i ====> no error occured for using argument value less than e-307
 	
-5.2.2 FLInvCDFBradford
-	1)--  Case 1b ====> error message occured for positive test
-	2)--  Case 1e ====> no error occured for using argument value less than e-307
-	
-5.2.3 FLInvCDFBurr
+5.2.2 FLInvCDFBradford -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 	
-5.2.4 FLInvCDFCauchy
+5.2.3 FLInvCDFBurr -same as beta-
+	1)--  Case 1b ====> error message occured for positive test
+	2)--  Case 1e ====> no error occured for using argument value less than e-307
+	
+5.2.4 FLInvCDFCauchy -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 	
@@ -310,72 +246,72 @@
 5.2.6  FLInvCDFChiSq
 	No comments
 
-5.2.7 FLInvCDFCosine
+5.2.7 FLInvCDFCosine-same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 
-5.2.8 FLInvCDFerlang
+5.2.8 FLInvCDFerlang -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 
 5.2.9 FLInvCDFExp
 	No comments
 
-5.2.10 FLInvCDFextremeLB
+5.2.10 FLInvCDFextremeLB -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307	
 	
-5.2.11 FLInvCDFisk
+5.2.11 FLInvCDFisk -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 
-5.2.12 FLInvCDFoldedNormal
+5.2.12 FLInvCDFoldedNormal -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307	
 	3)-- Case 1i ====> no error occured for using argument value less than e-307
 	
 5.2.13 FLInvCDFGamma
 	No comments
-	
-5.2.14 FLInvCDFGenLogistic
+	 
+5.2.14 FLInvCDFGenLogistic -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307\
 	
-5.2.15 FLInvCDFGumbel
+5.2.15 FLInvCDFGumbel -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 	
-5.2.16 FLInvCDFHypeSecant
+5.2.16 FLInvCDFHypeSecant -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307	
 	
-5.2.17 FLInvCDFInvNormal
+5.2.17 FLInvCDFInvNormal -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	
-5.2.18 FLInvCDFLaplace
+5.2.18 FLInvCDFLaplace -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	
-5.2.19 FLInvCDFLogistic
+5.2.19 FLInvCDFLogistic -same as beta-
 	1)--  Case 1c ====> no error occured for using argument value less than e-307
 	
-5.2.20 FLInvCDFLogNormal
+5.2.20 FLInvCDFLogNormal -same as beta-
 	1)--  Case 1c ====> no error occured for using argument value less than e-307
 	
-5.2.21 FLInvCDFMaxwell
+5.2.21 FLInvCDFMaxwell -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	
-5.2.22 FLInvCDFNormal
+5.2.22 FLInvCDFNormal -same as beta-
 	1)--  Case 1c ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 	
-5.2.23 FLInvCDFPareto
+5.2.23 FLInvCDFPareto -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	2)--  Case 1e ====> no error occured for using argument value less than e-307
 	
-5.2.24 FLInvCDFPower
+5.2.24 FLInvCDFPower -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 	
-5.2.25 FLInvCDFRayleigh
+5.2.25 FLInvCDFRayleigh -same as beta-
 	1)--  Case 1b ====> error message occured for positive test
 
 5.2.26 FLInvCDFReciprocal
@@ -402,38 +338,38 @@
 5.2.32 FLInvCDFWeibull
 	1)--  Case 1c ====> no error occured for using argument value less than e-307	
 
-8
-8.1 FLMLEBinomialUdt
+8 check corespondingly on TD,  To be investigated
+8.1 FLMLEBinomialUdt x
 	Negative Tests:
 		1)error for :1.b,d,g,h,i,p,q,s,v,w,z,ae,af,ah,
 		2)error for :2.b,d,g,h,i,p,q,s,v,w,z,ae,af,ah
 		3)error for :3.a,
 		4)error for :5.a,b
 
-8.2  FLMLEChiSqUdt
+8.2  FLMLEChiSqUdt x
 	Negative Tests
 		1)error for :1.b,d,g,h,i,k ( here the query is same as in TD i.e HASH and WITH are used),p,q,s,v,w,z,ae,af,ah,
 		2)section 2 of negative test is uncommented : error for :2.a,b,c,d,e,g,h,i,j,k,m,n,o,p,q,s,t,u,v,w,x,y,z,ab,ac,ae,af,ag,ah,ai,aj,
 		3)error for :3.a,b,c
 		4)error for :5.a,b
 	
-8.3 FLMLEExpUdt
+8.3 FLMLEExpUdt x
 	Negative Tests
 		1)error for 1.k( here the query is same as in TD i.e HASH and WITH are used)
 		2)section 2 of negative test is uncommented : error for :2.ab,
 		3)error for :3.a,b,c
 		4)error for :5.a,b
 	
-8.4 FLMLENormalUdt
+8.4 FLMLENormalUdt x 
 	Negative Tests
 		1)error for 1.k( here the query is same as in TD i.e HASH and WITH are used)
-		2)section 2 of negative test is uncommented : error for :2.ab, ("An error occurred while inverting the matrix")
-		3)error for :3.a,b,c ("An error occurred while inverting the matrix")
-		4)error for :5.a,b ("Value cannot be NULL.")
+		#2)section 2 of negative test is uncommented : error for :2.ab, ("An error occurred while inverting the matrix")
+		#3)error for :3.a,b,c ("An error occurred while inverting the matrix")
+		#4)error for :5.a,b ("Value cannot be NULL.")
 	Positive Tests
-		1)errors for :2a,b,c ("An error occurred while inverting the matrix")
+		#1)errors for :2a,b,c ("An error occurred while inverting the matrix")
 		
-8.5 FLMLEPoissonUdt
+8.5 FLMLEPoissonUdt 
 	Negative Tests
 		1)error for 1.b,d,g,h,i,k ( here the query is same as in TD i.e HASH and WITH are used),p,q,s,v,w,z,ae,af,ah,
 		2)error for :2.b,d,g,h,i,p,q,s,v,w,z,ae,af,ah
@@ -452,7 +388,7 @@
 	Positive Tests
 		1)test 1,2* :===>  error message " An error occurred while inverting the matrix." returned
 		
-8.7 FLMLEStudentsTUdt
+8.7 FLMLEStudentsTUdt 
 	Negative Tests
 		1)empty output table for 1.a,b,e,f,g,h,i,j,k,n,o,p,q,r,s,u,v,w,y,z,ab,ac,ad,ae,ag,ah,ai,aj,ak,al,an,
 		2)error for 1.c,d,l,m,t,x,aa,af,am,ao,
@@ -466,3 +402,67 @@
 	Positive Tests
 		1)empty output table for case 1
 		2)case 2 :===> view creaation query edited by providing required parameters . Error occurs "An error occurred while inverting the matrix"
+		
+10
+
+10.1 FLAnova1WayUdt
+	HASH BY edited in script
+	#1)no error message for negative test case 1 and 2        
+	
+10.2 SP_ANCOVA-NZ-01
+	No comments
+	
+10.3.1 FLCrossTab-TD-05.tst  : To be completed yet!! the query is as it is in TD and the test cases need to be seen
+
+10.4 SP_FLKSTest1S-TD-01.tst
+    syntax error were removed 
+	No comments on errors found
+	
+10.5 FLtTest1S
+	1)-- Case 4b,5c,5d: return value written in script was changed from 3.61217752509718E-261 to  5.7399657661151e-206, 5.4272742252909e-206
+
+10.6 FLtTest2S
+	#1)Case 4a,4b,5.(c,d,e,f): ===> result does not match expected result as in script. i.e expected "row returned as null value" but an error ocuured "Error during tTest2S computation."
+
+10.7 FLMWTest
+	#1)---- Negative Case 3: Num_Val is a constant value =====> query runs without throwing error message
+
+10.8 FLzTest1P
+	#1)Negative Cases 5a,6c,6d,7b,7c,:===> returns non-empty table but NULL output is expected 
+	#2)Negative Case 9c:returns non-empty table but error message "floating point exception: divide by zero" is expected
+	
+10.9 FLzTest1S
+	#1)Negative Case 1e,1f,:returns non-empty table but error message "floating point exception: Invalid arithmetic operation" is expected
+	
+10.10 FLzTest2P
+	#1)Negative Case 3a,4b,: Try the test with empty table ======> returns error but NULL value is expected as in script
+	#1)Negative Cases 7c,7d,8b,8c:===> returns non-empty table but NULL output is expected 
+	
+10.11 FLzTest2S
+	#1)Negative Case 1c: Try the test with empty table ======> returns error but NULL value is expected as in script
+	#2)Negative Case 1d,1e,:returns non-empty table but error message "floating point exception: Invalid arithmetic operation" is expected
+	
+
+11.
+
+11.2.1 SP_DeepToWide -TO BE INVESTIGATED-
+	1)Positive--CASE 1,2,3,4,5 ====> gives error 
+
+11.2.2 SP_RegrDataPrep
+	#1)Negative--CASE 16a,18 ====> does not give error 
+	No infotable
+	
+11.2.3 SP_WideToDeep : No comments
+	
+11.3.1 SP_DecisionTree
+	#1)-- Case 2a,3b,5b,6a,9a,11c,:No data in table === >no error returned
+
+11.3.2 SP_DecisionTreeScore : no script available
+
+11.5 Kmeans : skipped this part
+
+11.6 
+	11.6.1 FL_linregr :skipped
+	11.6.2 Sp_linregr
+		
+		

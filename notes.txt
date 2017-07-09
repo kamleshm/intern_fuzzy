@@ -1,0 +1,194 @@
+WITH tw (GroupID, tabrowid, tabcolid) AS
+(
+SELECT 1 as GroupID,
+a.tabrowid,
+a.tabcolid
+FROM tblCrossTab a
+)
+SELECT  d.*
+FROM    (SELECT tw.GroupID,tw.tabrowid,tw.tabcolid,
+                NVL(LAG(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.tabrowid), 1) AS begin_flag,
+                NVL(LEAD(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.tabrowid), 1) AS end_flag
+        FROM tw) as z,
+                TABLE(FLCrossTabUdt(z.groupid,z.tabrowid,z.tabcolid,z.begin_flag,z.end_flag)) AS d
+ORDER BY 1;
+
+
+CALL FLCrossTab(NULL, 'tabrowid', 'tabcolid', NULL, NULL, 0, 'ResultTable');
+
+SELECT a.*
+FROM(
+SELECT 1 AS groupid,
+a.tabrowid,
+a.tabcolid,
+NVL(LAG(0) OVER (PARTITION BY groupid ORDER BY a.tabrowid), 1)
+AS begin_flag,
+NVL(LEAD(0) OVER (PARTITION BY groupid ORDER BY a.tabrowid), 1)
+AS end_flag
+FROM tblCrossTab a) AS z,
+TABLE(FLCrossTabUdt(z.groupid,z.tabrowid,z.tabcolid,z.begin_flag,z.end_flag)) AS a; 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+WITH z (GroupID, ObsID, NumVal, P, D, Q) AS (
+SELECT 1 as GroupID, ObsID, Num_Val, -1, 0, 0 FROM tblTimeSeriesW1)
+SELECT a.*
+FROM   (SELECT z.GroupID,z.ObsId,z.NumVal,z.P,z.D,z.Q,
+        NVL(LAG(0) OVER (PARTITION BY z.GroupId ORDER BY z.ObsId),1) AS begin_flag,
+                                NVL(LEAD(0) OVER (PARTITION BY z.GroupId ORDER BY z.ObsId),1) AS end_flag
+                FROM z) as zz,TABLE (FLARIMAUdt(zz.GroupId,zz.NumVal,zz.P,zz.D,zz.Q,zz.begin_flag,zz.end_flag)) AS a;
+
+CREATE VIEW view_ANOVA1Way AS
+SELECT s.serialval AS GroupID,
+		t.City,
+		t.SalesPerVisit
+FROM tblCustData t,
+		fzzlserial s
+		WHERE City <> 'Boston'	
+		AND serialval <= 1;
+SELECT a.*
+FROM(SELECT a.GroupID,
+		a.City,
+		a.SalesPerVisit,
+		NVL(LAG(0) OVER (PARTITION BY a.GroupID ORDER BY a.City), 1) AS begin_flag,
+		NVL(LEAD(0) OVER (PARTITION BY a.GroupID ORDER BY a.City), 1) AS end_flag
+FROM view_ANOVA1Way a) AS z,
+TABLE(FLANOVA1WAYUdt(z.GroupID,z.City,z.SalesPerVisit,z.begin_flag,z.end_flag)) AS a;
+
+WITH tw (GroupID, City, SalesPerVisit) AS
+(
+SELECT  serialval AS GroupID,
+        City,
+        1
+FROM    tblCustData t, fzzlserial s
+WHERE City <> 'Boston'
+AND serialval <= 1
+)
+SELECT  d.*
+FROM    (SELECT tw.GroupID,tw.City,tw.SalesPerVisit,
+		NVL(LAG(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.City), 1) AS begin_flag,
+		NVL(LEAD(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.City), 1) AS end_flag
+        FROM tw) as z,
+		TABLE(FLANOVA1WAYUdt(z.GroupID,z.City,z.SalesPerVisit,z.begin_flag,z.end_flag)) AS d;
+
+ TABLE   (
+                FLAnova1WayUdt (tw.m_id, tw.City, tw.SalesPerVisit)
+                HASH BY tw.m_id
+                LOCAL ORDER BY tw.m_id
+                ) AS d
+ORDER BY 1;
+
+
+				
+				
+Files tested:
+
+1.FLCap-NZ-01.tst
+2.FLCollar-NZ-01.tst
+3.FLGammaLn-NZ-01.tst
+4.FLFloor-NZ-01.tst
+5.FLCorrel-NZ-01.tst
+6.FLCount-NZ-01.tst
+7.FLCountNeg-NZ-01.tst
+8.FLCountNull-NZ-01.tst
+9.FLCountPos-NZ-01.tst
+10.FLCovarP-NZ-01.tst
+11.FLCovar-NZ-01.tst
+12.FLDevSq-NZ-01.tst
+13.FLGeoMean-NZ-01.tst
+14.FLHarMean-NZ-01.tst
+15.FLMean-NZ-01.tst
+16.FLKurtosis-NZ-01.tst
+17.FLMax-NZ-01.tst
+18.FLMedianWin-NZ-01.tst
+19.FLMin-NZ-01.tst
+20.FLNtileWin-NZ-01.tst
+21.FLPercWin-NZ-01.tst			
+22.FLPercentWin-NZ-01.tst
+23.FLProd-NZ-01.tst
+24.FLRank-NZ-01.tst
+25.FLSkewness-NZ-01.tst
+26.FLStdDev-NZ-01.tst
+27.FLStdDevP-NZ-01.tst
+28.FLSum-NZ-01.tst
+29.FLSumProd-NZ-01.tst
+30.FLVar-NZ-01.tst
+31.FLVarP-NZ-01.tst
+32.FLWtAvg-NZ-01.tst
+33.FLWtCovar-NZ-01.tst
+34.FLWtStdDev-NZ-01.tst
+35.FLWtVar-NZ-01.tst
+36.FLCleanStr-NZ-01.tst
+37.FLConcatStr-NZ-01.tst
+38.FLDLevenshteinDist-NZ-01.tst
+39.FLExtractStr-NZ-01.tst
+40.FLGetFlat-NZ-01.tst
+41.FLHammingDist-NZ-01.tst
+42.FLInStr-NZ-01.tst
+43.FLIsNumeric-NZ-01.tst
+44.FLJaroScore-NZ-01.tst
+45.FLJaroWinklerScore-NZ-01.tst
+46.FLLastValue-NZ-01.tst
+47.FLRegExp_Like-NZ-01.tst
+48.FLStrTok-NZ-01.tst
+49.FLInvCDFBeta-NZ-01.tst
+50.FLInvCDFBradford-NZ-01.tst
+51.FLInvCDFBurr-NZ-01.tst
+52.FLInvCDFCauchy-NZ-01.tst
+53.FLInvCDFChi
+54.FLInvCDFChiSq-NZ-01.tst
+55.FLInvCDFCosine-NZ-01.tst
+56.FLInvCDFErlang-NZ-01.tst
+57.FLInvCDFExp-NZ-01.tst
+58.FLInvCDFExtremeLB-NZ-01.tst
+59.FLInvCDFFisk-NZ-01.tst
+60.FLInvCDFFoldedNormal-NZ-01.tst
+61.FLInvCDFGamma-NZ-01.tst
+62.FLInvCDFGenLogistic-NZ-01.tst
+63.FLInvCDFGumbel-NZ-01.tst
+64.FLInvCDFHypSecant-NZ-01.tst
+65.FLInvCDFInvNormal-NZ-01.tst
+66.FLInvCDFLaplace-NZ-01.tst
+67.FLInvCDFLogistic-NZ-01.tst
+68.FLInvCDFLogNormal-NZ-01.tst
+69.FLInvCDFMaxwell-NZ-01.tst
+70.FLInvCDFNormal-NZ-01.tst
+71.FLInvCDFPareto-NZ-01.tst
+72.FLInvCDFPower-NZ-01.tst
+73.FLInvCDFRayleigh-NZ-01.tst
+74.FLInvCDFReciprocal-NZ-01.tst
+75.FLInvCDFSemicircular-NZ-01.tst
+76.FLInvCDFStudentsT-NZ-01.tst
+77.FLInvCDFTransBeta-NZ-01.tst
+78.FLInvCDFTriangular-NZ-01.tst
+89.FLInvCDFUniform-NZ-01.tst
+90.FLInvCDFWeibull-NZ-01.tst
+91.FLAnova1WayUdt-TD-01.tst
+92.SP_ANCOVA-NZ-01.tst
+93.SP_FLKSTest1S-TD-01.tst
+94:FLCrossTab-TD-05.tst ------------------not completed
+95.FLtTest1S-NZ-01.tst
+96.FLtTest2S-NZ-01.tst
+97.FLMWTest-NZ-01.tst
+98.FLzTest1P-TD-01.tst
+99.FLzTest1S-TD-01.tst
+100.FLzTest2S-TD-01.tst
+101.FLzTest2P-TD-01.tst
+102.FLMLEBinomialUdt-NZ-01.tst
+103.FLMLEChiSqUdt-NZ-01.tst
+104.FLMLEExpUdt-NZ-01.tst
+105.FLMLENormalUdt-NZ-01.tst
+106.FLMLEPoissonUdt-NZ-01.tst
+107.FLMLEWeibullUdt-NZ-01.tst
+108.Netezza-Adv-FitDistributions/FLMLEStudentsTUdt-NZ-01.tst
+109.SP_WideToDeep-NZ-01.tst
+110.SP_RegrDataPrep-NZ-01.tst
+111.SP_DeepToWide-NZ-01.tst
+112.SP_DecisionTree-NZ-01.tst
+
