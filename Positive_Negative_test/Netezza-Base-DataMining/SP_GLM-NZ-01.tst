@@ -33,12 +33,12 @@
 --
 --	Return value:	    	VARCHAR(30)
 --
---	Last Updated:	    	01-19-2014
+--	Last Updated:	    	07-10-2017
 --
---	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>
+--	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>,<kamlesh.meena@fuzzylogix.com>
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --Create the test table 
@@ -207,4 +207,5 @@ ORDER BY 2, 3;
 DELETE FROM fzzlGLMColumns WHERE SPECID IN ('GLM1', 'GLM2');
 DELETE FROM  fzzlGLMIntColumns WHERE SPECID IN ( 'Int1', 'Int2') ;
 DROP TABLE tblTestGLMWide;
+\time
 -- 	END: TEST SCRIPT

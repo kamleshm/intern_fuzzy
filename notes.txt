@@ -1,32 +1,22 @@
-WITH tw (GroupID, tabrowid, tabcolid) AS
-(
-SELECT 1 as GroupID,
-a.tabrowid,
-a.tabcolid
-FROM tblCrossTab a
-)
-SELECT  d.*
-FROM    (SELECT tw.GroupID,tw.tabrowid,tw.tabcolid,
-                NVL(LAG(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.tabrowid), 1) AS begin_flag,
-                NVL(LEAD(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.tabrowid), 1) AS end_flag
-        FROM tw) as z,
-                TABLE(FLCrossTabUdt(z.groupid,z.tabrowid,z.tabcolid,z.begin_flag,z.end_flag)) AS d
-ORDER BY 1;
+1. UnitTest, TestCat Remove		x
 
+2. Sed	x		 difference comes from analysis id and random string
 
-CALL FLCrossTab(NULL, 'tabrowid', 'tabcolid', NULL, NULL, 0, 'ResultTable');
+3. Logfile table
 
-SELECT a.*
-FROM(
-SELECT 1 AS groupid,
-a.tabrowid,
-a.tabcolid,
-NVL(LAG(0) OVER (PARTITION BY groupid ORDER BY a.tabrowid), 1)
-AS begin_flag,
-NVL(LEAD(0) OVER (PARTITION BY groupid ORDER BY a.tabrowid), 1)
-AS end_flag
-FROM tblCrossTab a) AS z,
-TABLE(FLCrossTabUdt(z.groupid,z.tabrowid,z.tabcolid,z.begin_flag,z.end_flag)) AS a; 
+4. Comments
+
+5. Query Time
+
+6. Help in single file		x
+
+7. Timestamp change		x
+
+8. Case insensitive
+
+9. import only when available
+
+10. multiprocessing from , import remove
  
  
  
@@ -191,4 +181,15 @@ Files tested:
 110.SP_RegrDataPrep-NZ-01.tst
 111.SP_DeepToWide-NZ-01.tst
 112.SP_DecisionTree-NZ-01.tst
-
+113.Netezza-Base-MachineLearning/SP_HKMeans-NZ-01.tst
+114.Netezza-Base-DataMining/SP_KMeans-NZ-01.tst
+115.Netezza-Base-MachineLearning/FLLinRegrUdt-NZ-01.tst
+116.Netezza-Base-DataMining/SP_LinRegr-NZ-01.tst
+117.Netezza-Base-MachineLearning/FLLinRegrBWUdt-NZ-01.tst
+118.Netezza-Base-DataMining/SP_LinRegrBW-NZ-01.tst
+119.Netezza-Base-DataMining/SP_GLM-NZ-01.tst 
+120.Netezza-Base-DataMining/SP_LinRegrMultiDataSet-NZ-01.tst
+121.Netezza-Base-DataMining/SP_LinRegrSF-NZ-01.tst
+122.Netezza-Base-DataMining/SP_LinRegrFB-NZ-01.tst
+123.Netezza-Base-DataMining/SP_LinRegrSW-NZ-01.tst
+124.Netezza-Base-DataMining/SP_LinRegrSWEff-NZ-01.tst

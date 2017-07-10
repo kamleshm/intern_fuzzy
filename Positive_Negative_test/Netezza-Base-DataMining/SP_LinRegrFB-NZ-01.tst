@@ -31,12 +31,12 @@
 --
 --	Return value:	    	VARCHAR(64)
 --
---	Last Updated:	    	01-19-2015
+--	Last Updated:	    	07-10-2017
 --
---	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>
+--	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>,<kamlesh.meena@fuzzylogix.com>
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 ------ Table used for regression
@@ -60,16 +60,17 @@ DISTRIBUTE ON(ObsID);
 
 ---Case 1a
 --- Incorrect table name
-EXEC SP_LinRegrFB('tblLinRegr_NotExist','', 0.50, 0.10, 'Test Linear FB' );
---Case 1aa
+EXEC SP_LinRegrFB('tblLinRegr_NotExist','', 0.50, 0.10, 'HelloWorld' );
+---Case 1b
 --- NULL table name
-EXEC SP_LinRegrFB(NULL,'', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB(NULL,'', 0.50, 0.10, 'HelloWorld' );
+---Case 1c
 --- Empty string as  table name
-EXEC SP_LinRegrFB('','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('','', 0.50, 0.10, 'HelloWorld' );
 
 ---Case 2a
 ---- No data in table
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 ---Case 3
 ---- Populate data in table
@@ -83,34 +84,34 @@ FROM   tblLinRegr a;
 
 --Case4a 
 ---Incorrect Values for Highest Prob1 allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', -0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', -0.50, 0.10, 'HelloWorld' );
 
 --Case4b 
 ---Incorrect Values for Highest Prob1 allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', 1.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 1.50, 0.10, 'HelloWorld' );
 
 --Case4c 
 ---Incorrect Values for Highest Prob allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0, 0.10, 'HelloWorld' );
 --Case4d 
 ---Incorrect Values for Highest Prob allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', 1.0, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 1.0, 0.10, 'HelloWorld' );
 
 --Case5a 
 ---Incorrect Values for Highest Prob2 allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, -0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, -0.10, 'HelloWorld' );
 
 --Case5b 
 ---Incorrect Values for Highest Prob2 allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 10.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 10.10, 'HelloWorld' );
 
 --Case5c 
 ---Incorrect Values for Highest Prob2 allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0, 'HelloWorld' );
 
 --Case5d 
 ---Incorrect Values for Highest Prob allowed
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 1.0, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 1.0, 'HelloWorld' );
 
 --Case 6a
 ---- Insert data without the intercept and dependent variable
@@ -122,7 +123,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID > 0;
 
 ---- No dependent variable in table
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 ---Case 7a
 ---- Insert dependent variable only for some obs
@@ -134,7 +135,7 @@ AND     a.ObsID <= 10000;
 
 
 ---- No dependent variable for all observations
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 --Case 8a
 ---- Insert intercept variable only for some obs
@@ -152,7 +153,7 @@ WHERE   a.VarID = 0
 AND     a.ObsID <= 10000;
 
 ---- No intercept variable for all observations
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 --Case 9a
 ---- Cleanup the intercept and insert the value 2 for intercept
@@ -167,7 +168,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID = 0;
 
 ---- Intercept not 0 or 1
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 --Case 9aa
 ---- Cleanup the intercept and insert  1 and 0  for intercept
@@ -182,7 +183,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID = 0;
 
 ---- Intercept  value not unique
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 --Case 10a
 ---- Cleanup the table
@@ -195,7 +196,7 @@ FROM    tblLinRegr a
 WHERE   a.ObsID <= 100;
 
 ---- Number of observations <= number of variables
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 ---Case 11 a
 ---- Cleanup the table and populate the data
@@ -215,7 +216,7 @@ WHERE   a.VarCol = 10
 AND     a.ObsCol = 26;
 
 ---- Repeated data in table
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 --Case 12a
 ---- Cleanup the table and populate
@@ -234,7 +235,7 @@ WHERE   a.VarID IN (-1, 0);
 
 
 ---- Non consecutive variable IDs 
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.10, 'HelloWorld' );
 
 --Case 13 a
 --Insert  in fzzllinregrmodelvarspec all varids that are in the intable
@@ -255,7 +256,7 @@ FROM ( SELECT DISTINCT VarID
                 
 
 --All varids included
-EXEC SP_LinRegrFB('tblLinRegrTest','GSENTEST', 0.50, 0.10, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','GSENTEST', 0.50, 0.10, 'HelloWorld' );
 
 --Case 14a
 DELETE FROM tblLinRegrTest;
@@ -273,7 +274,7 @@ FROM ( SELECT DISTINCT VarID
                   FROM tblLinRegrTest ) a; 
                 
 --All varids  excluded 
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'HelloWorld' );
 
 -- END: NEGATIVE TEST(s)
 
@@ -299,7 +300,7 @@ GROUP BY 1
 ORDER BY 1;
 
 ---- Perform regression with non-sparse data
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'HelloWorld' );
 
 -- Display result
 SELECT  a.*
@@ -307,8 +308,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -318,8 +318,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1,2,3;
@@ -346,7 +345,7 @@ GROUP BY 1
 ORDER BY 1;
         
 ---- Perform regression with sparse data
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'HelloWorld' );
 
 -- Display result
 SELECT  a.*
@@ -354,8 +353,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -365,8 +363,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2,3;
@@ -398,7 +395,7 @@ GROUP BY 1
 ORDER BY 1;
 
 ---- Perform regression with intercept all 0s
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'HelloWorld' );
 --error Inverting matrix
 ---JIRA TDFL -464 ..it's a RFC
 
@@ -426,7 +423,7 @@ GROUP BY 1
 ORDER BY 1;
 
 ---- Perform regression with intercept value all 1s
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'HelloWorld' );
 
 -- Display result
 SELECT  a.*
@@ -434,8 +431,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -445,8 +441,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2,3;
@@ -474,7 +469,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID IN (-1, 0);
 
 ---- Perform regression with sparse data
-EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','', 0.50, 0.1, 'HelloWorld' );
 
 -- Display result
 SELECT  a.*
@@ -482,8 +477,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -493,8 +487,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -528,7 +521,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID IN (-1, 0);
 
 --Test with SpecID
-EXEC SP_LinRegrFB('tblLinRegrTest','GSENTEST', 0.50, 0.1, 'Test Linear FB' );
+EXEC SP_LinRegrFB('tblLinRegrTest','GSENTEST', 0.50, 0.1, 'HelloWorld' );
 
 -- Display result
 SELECT  a.*
@@ -536,8 +529,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -547,8 +539,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+        WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -561,5 +552,5 @@ DROP TABLE tblLinRegrTest;
 DROP TABLE tblLinRegrTest;
 
 -- END: POSITIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

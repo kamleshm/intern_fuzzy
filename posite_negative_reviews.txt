@@ -459,10 +459,61 @@
 
 11.3.2 SP_DecisionTreeScore : no script available
 
-11.5 Kmeans : skipped this part
+11.5 Kmeans : 
+	11.5.1 SP_HKMeans
+		1)Negative case 3a) ====> runs  without error when no data in the table  , gives error in TD
+		2)Negative case 4b,4c) ====> runs without error with value of no. of clusters,iterations <=0 , gives error in TD
+			
+	11.5.2 SP_KMeans
+		No comments
 
 11.6 
-	11.6.1 FL_linregr :skipped
+	11.6.1 FL_linregr 
+		1)Gives error :"ERROR:  SPU job process terminated (Segmentation fault)" when 'tblLinRegr' is used for testing.So tbllinregrdatadeep is used
+		2)--    Case 3a:==> no error when input table has no data
+		3)--    Case 6b:Intercept not 0 or 1 ===> No error returned
+		4)--    Case 8b:Repeated data in table ===> No error returned 
+		5)--    Case 9b:Non consecutive variable IDs ===> No error returned 
+		
 	11.6.2 Sp_linregr
+		1) --    Case 6b:Insert intercept variable only for some obs ==>No error returned 
+		2)--    Case 7b:Cleanup the intercept and insert the value 2 for intercept => No error returned
+		3)Case 9d:Repeated data in table  => No error returned
+		4)case 10c => No error returned
+
+	11.6.4 Generalized Linear Regression with LSMeans SP_GLM
+		No comments
+	
+	11.6.5 SP_LinRegrBW
+		1)Case2a:input table has no data==> no error as in TD
+		2)--Case 8a : Intercept not 0 or 1 ==>-do-
+		3) Case 10 a:Repeated data in table ===> -do-
+		4)-Case 11a:Non consecutive variable IDs===>-do-
+		5)case 19,20,21,22,23,25,25 === > -do-
+		
+	11.6.6 FLLinRegrBWUdt : newly created
+		1)Case3a:input table has no data==> no error as in TD
+		2)case 4b(No dependent variable in table),
+				5b(No dependent variable for all observations),
+				6b(No intercept variable for all observations),
+				7b(Intercept not 0 or 1)
+				8b(Intercept  value not  unique),
+				10b(Repeated data in table)
+				11(b)Non consecutive variable IDs
+				14(populate collinearity)
+	
+	11.6.7 SP_LinRegrFB
+		
+	
+	11.6.8 SP_LinRegrMultiDataSet
+		
+	
+	11.6.9 SP_LinRegrSF
+	
+	
+	11.6.10 SP_LinRegrSW
+	
+	
+	11.6.11 SP_LinRegrSWEff
 		
 		

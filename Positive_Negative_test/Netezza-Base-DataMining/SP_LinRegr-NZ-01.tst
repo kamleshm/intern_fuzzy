@@ -29,7 +29,7 @@
 --
 --	Return value:	    	VARCHAR(64)
 --
---	Last Updated:	    	01-19-2015
+--	Last Updated:	    	07-10-2017
 --
 --	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>,<kamlesh.meena@fuzzl.com>
 
@@ -44,6 +44,7 @@
 --GROUP BY a.VarID
 --ORDER BY 1;
 
+DROP TABLE tblLinRegrTest IF EXISTS;
 CREATE TABLE tblLinRegrTest (
 ObsID       BIGINT,
 VarID       INTEGER,
@@ -57,34 +58,41 @@ DISTRIBUTE ON(ObsID);
 ---------------------------------------------------------------------------------------
 
 ---- Incorrect table name
+--    Case 1a:
 EXEC SP_LinRegr('tblLinRegrTemp','','HelloWorld');
 --Result:ERROR [42S02] ERROR:  relation does not exist RESEARCH_FENG.FBAI.TBLLINREGRTEMP
 
 ---- Populate data in table
+--    Case 1b:
 INSERT INTO tblLinRegrTest
 SELECT a.*
 FROM   tblLinRegr a;
 
 ---- Incorrect column names
+--    Case 2a:
 ---- Not Applicable for Netezza
 
 ---- No data in table
+--    Case 3a:
 DELETE FROM tblLinRegrTest;
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 --Result:ERROR [HY000] ERROR:  record VREC is unassigned yet
 
 
 ---- Insert data without the intercept and dependent variable
+--    Case 4a:
 INSERT INTO tblLinRegrTest
 SELECT  a.*
 FROM    tblLinRegr a
 WHERE   a.VarID > 0;
 
 ---- No dependent variable in table
+--    Case 4b:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 
 ---- Insert dependent variable only for some obs
+--    Case 5a:
 INSERT INTO tblLinRegrTest
 SELECT  a.*
 FROM    tblLinRegr a
@@ -93,9 +101,11 @@ AND     a.ObsID <= 10000;
 
 
 ---- No dependent variable for all observations
+--    Case 5b:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 ---- Insert intercept variable only for some obs
+--    Case 6a:
 DELETE FROM tblLinRegrTest;
 
 INSERT INTO tblLinRegrTest
@@ -112,9 +122,11 @@ WHERE   a.VarID = 0
 AND     a.ObsID <= 10000;
 
 ---- No intercept variable for all observations
+--    Case 6b:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 ---- Cleanup the intercept and insert the value 2 for intercept
+--    Case 7a:
 DELETE FROM tblLinRegrTest
 WHERE VarID = 0;
 
@@ -126,46 +138,56 @@ FROM    tblLinRegr a
 WHERE   a.VarID = 0;
 
 ---- Intercept not 0 or 1
+--    Case 7b:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 ---- Cleanup the table
+--    Case 8a:
 DELETE FROM tblLinRegrTest;
 
 ---- Populate less rows than variables
+--    Case 8b:
 INSERT INTO tblLinRegrTest
 SELECT  a.*
 FROM    tblLinRegr a
 WHERE   a.ObsID <= 100;
 
 ---- Number of observations <= number of variables
+--    Case 8c:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 ---- Cleanup the table and populate the data
+--    Case 9a:
 DELETE FROM tblLinRegrTest;
 
+--    Case 9b:
 INSERT INTO tblLinRegrTest
 SELECT  a.*
 FROM    tblLinRegr a;
 
+--    Case 9c:
 --- Repeat a row in the table
 INSERT INTO tblLinRegrTest
 SELECT  a.ObsID,
         a.VarID,
-        a.NumVal
+        a.Value
 FROM    tblLinRegrTest a
 WHERE   a.VarID = 10
 AND     a.ObsID = 26;
 
 ---- Repeated data in table
+--    Case 9d:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 ---- Cleanup the table and populate
+--    Case 10a:
 DELETE FROM tblLinRegrTest;
 
+--    Case 10b:
 INSERT INTO tblLinRegrTest
 SELECT  a.ObsID,
         a.VarID * 2,
-        a.Num_Val
+        a.Value
 FROM    tblLinRegr a
 WHERE   a.VarID > 0
 UNION ALL
@@ -174,6 +196,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID IN (-1, 0);
 
 
+--    Case 10c:
 ---- Non consecutive variable IDs 
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
@@ -186,6 +209,7 @@ EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 
 ---- Cleanup the data and populate again
+--    Case 1a:
 DELETE FROM tblLinRegrTest;
 
 INSERT INTO tblLinRegrTest
@@ -194,11 +218,13 @@ FROM    tblLinRegr a;
 
 
 ---- Perform regression with non-sparse data
+--    Case 1b:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 --Note JIRA TDFL-116 raised as the SP stalls during execution at random.
 
 ---- Cleanup the data and populate again, make the data sparse i.e., non-zero values 
 ---- for all variables except dependent and intercept
+--    Case 2a:
 DELETE FROM tblLinRegrTest;
 
 INSERT INTO tblLinRegrTest
@@ -212,6 +238,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID IN (-1, 0);
         
 ---- Perform regression with sparse data
+--    Case 2b:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 
 -- Display result
@@ -239,6 +266,7 @@ ORDER BY 3, 1, 2;
 
 ------ Drop and recreate the test table with column names different than that of usual FL deep table naming conventions
 ---- This test is a negative test case on Netezza
+--    Case 3a:
 DROP TABLE tblLinRegrTest;
 
 CREATE TABLE tblLinRegrTest (
@@ -258,6 +286,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID IN (-1, 0);
         
 ---- Perform regression with sparse data
+--    Case 3b:
 EXEC SP_LinRegr('tblLinRegrTest','','HelloWorld');
 --Result: ERROR [42S22] ERROR:  Attribute 'A.VARID' not found 
 

@@ -31,12 +31,12 @@
 --
 --	Return value:	    	VARCHAR(64)
 --
---	Last Updated:	    	01-19-2015
+--	Last Updated:	    	07-10-2017
 --
---	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com> 
+--	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com> ,<kamlesh.meena@fuzzylogix.com>
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 ------ Table used for regression
@@ -61,9 +61,9 @@ DISTRIBUTE ON(ObsID);
 
 --Case 1a
 ---- Incorrect table name
-EXEC SP_LinRegrSWEff('tblLinRegrNotExist', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff(NULL, '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrNotExist', '', 0.05,0.1, 'HelloWorld');
+EXEC SP_LinRegrSWEff('', '', 0.05,0.1, 'HelloWorld');
+EXEC SP_LinRegrSWEff(NULL, '', 0.05,0.1, 'HelloWorld');
 
 ---- Populate data in table
 INSERT INTO tblLinRegrTest
@@ -79,23 +79,23 @@ FROM   tblLinRegr a;
 --Not Applicable for Netezza.
 
 --Param5(DETERMINE what will be good values)
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', NULL,0.1, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', -0.05,0.1, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0,0.1, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 20,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', NULL,0.1, 'HelloWorld');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', -0.05,0.1, 'HelloWorld');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0,0.1, 'HelloWorld');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 20,0.1, 'HelloWorld');
 
 --Param 6
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,NULL, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,-0.1, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,10.1, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0, 'Test Linear Stepwise Efficient');
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,NULL, 'HelloWorld');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,-0.1, 'HelloWorld');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,10.1, 'HelloWorld');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0, 'HelloWorld');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,1, 'HelloWorld');
 
 --Case 3
 ---- No data in table
 DELETE FROM tblLinRegrTest;
 
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 ---Case 4
 --- Insert data without the intercept and dependent variable
@@ -105,7 +105,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID> 0;
 
 ---- No dependent variable in table
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 --case 5
 ---- Insert dependent variable only for some obs
@@ -116,7 +116,7 @@ WHERE   a.VarID = -1
 AND     a.ObsID <= 10000;
 
 ---- No dependent variable for all observations
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 --case 6
 ---- Insert intercept variable only for some obs
@@ -136,7 +136,7 @@ WHERE   a.VarID = 0
 AND     a.ObsID <= 10000;
 
 ---- No intercept variable for all observations
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 --case 7
 ---- Cleanup the intercept and insert the value 2 for intercept
@@ -151,7 +151,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID= 0;
 
 ---- Intercept not 0 or 1
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 --case 8
 ---- Cleanup the table
@@ -164,7 +164,7 @@ FROM    tblLinRegr a
 WHERE   a.ObsID <= 100;
 
 ---- Number of observations <= number of variables
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 --case 9
 ---- Cleanup the table and populate the data
@@ -184,7 +184,7 @@ WHERE   a.VarCol = 10
 AND     a.ObsCol = 26;
 
 ---- Repeated data in table
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 --case 10
 ---- Cleanup the table and populate
@@ -228,7 +228,7 @@ GROUP BY 1
 ORDER BY 1;
 
 ---- Perform regression with non-sparse data
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 -- Display result
 SELECT  a.*
@@ -236,8 +236,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -247,8 +246,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2,3;
@@ -276,7 +274,7 @@ GROUP BY 1
 ORDER BY 1;
 
 ---- Perform regression with sparse data
-EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'Test Linear Stepwise Efficient');
+EXEC SP_LinRegrSWEff('tblLinRegrTest', '', 0.05,0.1, 'HelloWorld');
 
 -- Display result
 SELECT  a.*
@@ -284,8 +282,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -295,8 +292,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1,2,3;
@@ -306,5 +302,5 @@ ORDER BY 1,2,3;
 DROP TABLE tblLinRegrTest; 
 
 -- END: POSITIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

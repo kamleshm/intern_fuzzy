@@ -29,12 +29,12 @@
 --
 --	Return value:	    	VARCHAR(64)
 --
---	Last Updated:	    	01-19-2015
+--	Last Updated:	    	07-10-2017
 --
---	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>
+--	Author:			<gandhari.sen@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>,<kamlesh.meena@fuzzylogix.com>
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 ------ Table used for regression
@@ -58,9 +58,9 @@ DISTRIBUTE ON(ObsID);
 
 --Case 1a
 ---- Incorrect table name
-EXEC SP_LinRegrSF('tblLinRegrNotExist','','New Test 1');
-EXEC SP_LinRegrSF('','','New Test 1');
-EXEC SP_LinRegrSF(NULL,'','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrNotExist','','HelloWorld');
+EXEC SP_LinRegrSF('','','HelloWorld');
+EXEC SP_LinRegrSF(NULL,'','HelloWorld');
 
 ---- Populate data in table
 INSERT INTO tblLinRegrTest
@@ -74,7 +74,7 @@ FROM   tblLinRegr a;
 --Case 3
 ---- No data in table
 DELETE FROM tblLinRegrTest ALL;
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 ---Case 4
 --- Insert data without the intercept and dependent variable
@@ -84,7 +84,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID> 0;
 
 ---- No dependent variable in table
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 --Case 4
 ---- Insert dependent variable only for some obs
@@ -95,7 +95,7 @@ WHERE   a.VarID = -1
 AND     a.ObsID <= 10000;
 
 ---- No dependent variable for all observations
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 --case 5
 ---- Insert intercept variable only for some obs
@@ -115,7 +115,7 @@ WHERE   a.VarID = 0
 AND     a.ObsID <= 10000;
 
 ---- No intercept variable for all observations
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 --Case 6
 ---- Cleanup the intercept and insert the value 2 for intercept
@@ -130,7 +130,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID= 0;
 
 ---- Intercept not 0 or 1
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 --Case 7
 ---- Cleanup the table
@@ -143,7 +143,7 @@ FROM    tblLinRegr a
 WHERE   a.ObsID <= 100;
 
 ---- Number of observations <= number of variables
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 ---Case 8
 ---- Cleanup the table and populate the data
@@ -163,7 +163,7 @@ WHERE   a.VarCol = 10
 AND     a.ObsCol = 26;
 
 ---- Repeated data in table
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 --case 9
 ---- Cleanup the table and populate
@@ -182,7 +182,7 @@ WHERE   a.VarID IN (-1, 0);
 
 --case 10
 ---- Non consecutive variable IDs 
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 --BEGIN: POSITIVE TEST(s)
 ---------------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ SELECT  a.*
 FROM    tblLinRegr a;
 
 ---- Perform regression with non-sparse data
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 -- Display result
 SELECT  a.*
@@ -206,8 +206,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -217,8 +216,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2,3;
@@ -239,7 +237,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID IN (-1, 0);
         
 ---- Perform regression with sparse data
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 -- Display result
 SELECT  a.*
@@ -247,8 +245,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -258,8 +255,7 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY  1, 2,3;
@@ -286,7 +282,7 @@ FROM    tblLinRegr a
 WHERE   a.VarID IN (-1, 0);
 
 ---- Perform regression with sparse data
-EXEC SP_LinRegrSF('tblLinRegrTest','','New Test 1');
+EXEC SP_LinRegrSF('tblLinRegrTest','','HelloWorld');
 
 -- Display result
 SELECT  a.*
@@ -294,8 +290,7 @@ FROM    fzzlLinRegrStats a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
@@ -305,16 +300,14 @@ FROM    fzzlLinRegrCoeffs a,
         (
         SELECT  a.AnalysisID
         FROM    fzzlLinRegrInfo a
-        ORDER BY a.RunStartTime DESC
-		LIMIT 1
+	WHERE Note='HelloWorld'
         ) b
 WHERE   a.AnalysisID = b.AnalysisID
 ORDER BY 1, 2, 3;
 
 ---DROP the test table
 DROP TABLE tblLinRegrTest; 
-DROP TABLE tblLinRegrTest; 
 
 -- END: POSITIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT
