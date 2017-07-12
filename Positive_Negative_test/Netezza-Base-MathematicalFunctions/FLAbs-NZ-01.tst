@@ -26,13 +26,13 @@
 --
 --	Return value:			DOUBLE PRECISION
 --
---	Last Updated:			01-29-2014
+--	Last Updated:			07-11-2017
 --
---	Author:			    	<Zhi.Wang@fuzzyl.com>
+--	Author:			    	<Zhi.Wang@fuzzyl.com>,<Kamlesh.Meena.fuzzylogix.com>
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 -- .run file=../PulsarLogOn.sql
 
 -- .set width 2500
@@ -70,17 +70,17 @@ SELECT FLAbs(-1e307) AS FLAbs;
 -- BEGIN: NEGATIVE TEST(s)
 
 ---- Negative Test 1: Absolute Value of Value * 1e-400
---- Return expected error, Good
+--- Return 0 value, Good
 SELECT -100.1 * 1e-400 AS Val;
 SELECT FLAbs(-100.1 * 1e-400) AS FLAbs;
 
 ---- Negative Test 2: Absolute Value of Value * 1e400
---- Return expected error, Good
+--- Return 0 value, Good
 -- SELECT -100.1 * 1e400 AS Val;
 SELECT FLAbs(-100.1 * 1e400) AS FLAbs;
 
 ---- Negative Test 3: Invalid Data Type
---- Return expected error, Good
+--- Return NULL output, Good
 SELECT FLAbs(NULL) AS FLAbs;
 
 ---- Negative Test 4: Input from an Empty Table
@@ -97,7 +97,7 @@ CREATE TEMP TABLE tblAbsTest AS
  FROM tblAbsTest;
  
 ---- Negative Test 5: Input Null From a Table
---- Return expected error, Good
+--- Return NULL output, Good
  INSERT INTO tblAbsTest
  SELECT SerialVal AS ObsID,
                   NULL AS NumVal
@@ -107,5 +107,8 @@ CREATE TEMP TABLE tblAbsTest AS
  SELECT FLAbs(NumVal) AS FLAbs
  FROM tblAbsTest;
 
--- 	END: TEST SCRIPT
+--      END: NEGATIVE TEST(s)
 DROP TABLE tblAbsTest;
+\time
+-- 	END: TEST SCRIPT
+

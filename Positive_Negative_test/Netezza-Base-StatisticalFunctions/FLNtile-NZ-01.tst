@@ -28,13 +28,13 @@
 --
 --	Return value:			INT
 --
---	Last Updated:			05-03-2017
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Diptesh Nath
+--	Author:			    	Diptesh Nath,Kamlesh Meena
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -55,5 +55,5 @@ SELECT FLNtile(TickerId,ClosePrice,1,10)FROM  finstockprice GROUP BY TickerId,Cl
 SELECT FLNtile(TickerId,ClosePrice,1,10)FROM  finstockprice GROUP BY TickerId LIMIT 10;
 
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

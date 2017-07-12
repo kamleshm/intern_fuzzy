@@ -35,7 +35,7 @@
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -66,5 +66,5 @@ select FLPERC(dateidx, ClosePrice, 10e-100, 0.1) from finstockprice order by 1;
 
 
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

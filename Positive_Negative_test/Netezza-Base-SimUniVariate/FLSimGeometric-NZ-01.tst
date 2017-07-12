@@ -28,13 +28,13 @@
 --
 --	Return value:		    INTEGER
 --
---	Last Updated:		    12-26-2014
+--	Last Updated:		    07-11-2017
 --
---	Author:			    <Zhi.Wang@fuzzyl.com, Joydeep.Das@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>
+--	Author:			    <Zhi.Wang@fuzzyl.com, Joydeep.Das@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>,<Kamlesh.Meena@fuzzylogix.com>
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 -- 	BEGIN: POSITIVE TEST(s)
@@ -132,5 +132,5 @@ WHERE a.SerialVal <= 5
 ORDER BY 1;       
 
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

@@ -26,14 +26,15 @@
 --
 --	Return value:			BIGINT
 --
---	Last Updated:			04-18-2017
+--	Last Updated:			07-11-2017
 --
 --	Author:			    	<Zhi.Wang@fuzzyl.com>
---  Author:                 <Diptesh.Nath@fuzzylogix.com>
+--  Author:                             <Diptesh.Nath@fuzzylogix.com>
+--  Author:                             <Kamlesh.Meena@fuzzlogix.com>
 
 
 -- BEGIN: TEST SCRIPT
-
+\time
 -- .run file=../PulsarLogOn.sql
 
 -- .set width 2500
@@ -98,7 +99,7 @@ WHERE   a.SerialVal <= 10;
 -- BEGIN: NEGATIVE TEST(s)
 
 ---- Negative Test 1: No data
---- Output Null, Good
+--- Output 0 value, Good
 SELECT  FLMaxAt(a.SerialVal, a.RandVal),
         COUNT(*)
 FROM    fzzlSerial a
@@ -111,16 +112,18 @@ SELECT  FLMaxAt(a.RandVal, a.SerialVal),
 FROM    fzzlSerial a
 WHERE   a.SerialVal <= 10;
 
----- Negative Test 3: Invalid Data type: Input VarChar for 2nd Argument
+---- Negative Test 3a: Invalid Data type: Input VarChar for 2nd Argument
 --- Output Function doesn't exist error, Good
 SELECT  FLMaxAt(a.ObsID, a.City)
 FROM    tblCustData a;
 
-SELECT  FLMaxAt(a.ObsID, CAST (a.RandVal AS VARCHAR(30))),
+---- Negative Test 3b: Invalid Data type: Input VarChar for 2nd Argument
+--- Output Function doesn't exist error, Good
+SELECT  FLMaxAt(a.SerialVal, CAST (a.RandVal AS VARCHAR(30))),
         COUNT(*)
 FROM    fzzlSerial a
 WHERE   a.SerialVal <= 10;
 
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

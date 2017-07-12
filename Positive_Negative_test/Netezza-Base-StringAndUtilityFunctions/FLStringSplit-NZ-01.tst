@@ -27,13 +27,13 @@
 --
 --	Return value:			VARCHAR
 --
---	Last Updated:			04-28-2017
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Diptesh Nath
+--	Author:			    	Diptesh Nath,Kamlesh Meena
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -56,6 +56,7 @@ Select * FROM TABLE(FLSTRINGSPLIT('Home Depot|WAL-MART|DUANE|MARTHA|WALMART| DWA
 -- BEGIN: NEGATIVE TEST(s)
 
 ---- Negative Test 1: Wrong delimiter
+--- Result: Wrong delimiter gives the entire string
 Select * FROM TABLE(FLSTRINGSPLIT('Home Depot|WAL-MART|DUANE|MARTHA|WALMART| DWAYNE|MARHTA|','?'));
 
 ---- Negative Test 1: Less Argument
@@ -68,3 +69,6 @@ Select * FROM TABLE(FLSTRINGSPLIT('Home Depot|WAL-MART|DUANE|MARTHA|WALMART| DWA
 
 
 -- END: NEGATIVE TEST(s)
+\time
+-- END TEST SCRIPT
+

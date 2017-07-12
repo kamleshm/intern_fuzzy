@@ -26,13 +26,13 @@
 --
 --	Return value:			DOUBLE PRECISION
 --
---	Last Updated:			11-20-2014
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Surya Deepak Garimella
+--	Author:			    	Kamlesh Meena,Surya Deepak Garimella
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -115,13 +115,13 @@ SELECT FLSparseCovarP(4, 3, 1e400, 5, 5, 2) AS FLSparseCovarP;
 SELECT FLSparseCovarP(4, 3, 3, 5, 5, CAST (2**63 AS BIGINT)) AS FLSparseCovarP;
 
 ---- Negative Test 4: Input 1e-400
---- Numeric Overflow Error
+--- Return expected output, Good
 SELECT FLSparseCovarP(1e-400, 3, 3, 5, 5, 2) AS FLSparseCovarP;
 SELECT FLSparseCovarP(4, 1e-400, 3, 5, 5, 2) AS FLSparseCovarP;
 SELECT FLSparseCovarP(4, 3, 1e-400, 5, 5, 2) AS FLSparseCovarP;
 
 ---- Negative Test 5: Invalid Data Type
---- Return expected errors, Good
+--- Return expected output, Good
 SELECT FLSparseCovarP(4, 3, 3, 5, 5, 2.0) AS FLSparseCovarP;
 SELECT FLSparseCovarP(NULL, 3, 3, 5, 5, 2) AS FLSparseCovarP;
 SELECT FLSparseCovarP(4, NULL, 3, 5, 5, 2) AS FLSparseCovarP;
@@ -129,5 +129,5 @@ SELECT FLSparseCovarP(4, 3, NULL, 5, 5, 2) AS FLSparseCovarP;
 SELECT FLSparseCovarP(4, 3, 3, 5, 5, NULL) AS FLSparseCovarP;
 
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

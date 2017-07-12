@@ -18,62 +18,14 @@
 
 10. multiprocessing from , import remove
  
- 
- 
- 
- 
- 
- 
- 
+CREATE OR REPLACE VIEW z AS (
+SELECT 1 AS pGroupID, a.RandVal as pRandVal
+FROM fzzlSerial a
+WHERE a.SerialVal <= 2
+);
+SELECT z.pGroupID,z.pRandVal,FLPercRank(z.pRandVal, 'A') over (partition by z.pGroupID)  ORDER BY z.pGroupID ;
 
-WITH z (GroupID, ObsID, NumVal, P, D, Q) AS (
-SELECT 1 as GroupID, ObsID, Num_Val, -1, 0, 0 FROM tblTimeSeriesW1)
-SELECT a.*
-FROM   (SELECT z.GroupID,z.ObsId,z.NumVal,z.P,z.D,z.Q,
-        NVL(LAG(0) OVER (PARTITION BY z.GroupId ORDER BY z.ObsId),1) AS begin_flag,
-                                NVL(LEAD(0) OVER (PARTITION BY z.GroupId ORDER BY z.ObsId),1) AS end_flag
-                FROM z) as zz,TABLE (FLARIMAUdt(zz.GroupId,zz.NumVal,zz.P,zz.D,zz.Q,zz.begin_flag,zz.end_flag)) AS a;
-
-CREATE VIEW view_ANOVA1Way AS
-SELECT s.serialval AS GroupID,
-		t.City,
-		t.SalesPerVisit
-FROM tblCustData t,
-		fzzlserial s
-		WHERE City <> 'Boston'	
-		AND serialval <= 1;
-SELECT a.*
-FROM(SELECT a.GroupID,
-		a.City,
-		a.SalesPerVisit,
-		NVL(LAG(0) OVER (PARTITION BY a.GroupID ORDER BY a.City), 1) AS begin_flag,
-		NVL(LEAD(0) OVER (PARTITION BY a.GroupID ORDER BY a.City), 1) AS end_flag
-FROM view_ANOVA1Way a) AS z,
-TABLE(FLANOVA1WAYUdt(z.GroupID,z.City,z.SalesPerVisit,z.begin_flag,z.end_flag)) AS a;
-
-WITH tw (GroupID, City, SalesPerVisit) AS
-(
-SELECT  serialval AS GroupID,
-        City,
-        1
-FROM    tblCustData t, fzzlserial s
-WHERE City <> 'Boston'
-AND serialval <= 1
-)
-SELECT  d.*
-FROM    (SELECT tw.GroupID,tw.City,tw.SalesPerVisit,
-		NVL(LAG(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.City), 1) AS begin_flag,
-		NVL(LEAD(0) OVER (PARTITION BY tw.GroupID ORDER BY tw.City), 1) AS end_flag
-        FROM tw) as z,
-		TABLE(FLANOVA1WAYUdt(z.GroupID,z.City,z.SalesPerVisit,z.begin_flag,z.end_flag)) AS d;
-
- TABLE   (
-                FLAnova1WayUdt (tw.m_id, tw.City, tw.SalesPerVisit)
-                HASH BY tw.m_id
-                LOCAL ORDER BY tw.m_id
-                ) AS d
-ORDER BY 1;
-
+select TickerId,closeprice,FLPercRank(ClosePrice,'A') over (partition by TickerId ) from finstockprice order by TickerId LIMIT 10;
 
 				
 				
@@ -85,6 +37,7 @@ Files tested:
 4.FLFloor-NZ-01.tst
 5.FLCorrel-NZ-01.tst
 6.FLCount-NZ-01.tst
+6a.FLCountIf-NZ-01.tst
 7.FLCountNeg-NZ-01.tst
 8.FLCountNull-NZ-01.tst
 9.FLCountPos-NZ-01.tst
@@ -114,6 +67,26 @@ Files tested:
 33.FLWtCovar-NZ-01.tst
 34.FLWtStdDev-NZ-01.tst
 35.FLWtVar-NZ-01.tst
+35a.FLShuffleWin-NZ-01.tst
+35b.FLShuffleWinStr-NZ-01.tst
+35c.FLPercRank-NZ-01.tst
+35d.FLPerc-NZ-01.tst
+35e.FLNtile-NZ-01.tst
+35f.FLModEuclideanDist-NZ-01.tst
+35g.FLMinAt-NZ-01.tst
+35h.FLMaxAt-NZ-01.tst
+35g.FLFracRank-NZ-01.tst
+FLSparseCovarP-Netezza-01.tst
+FLSimTransBeta-NZ-01.tst
+FLSimNegBinomial-NZ-01.tst
+FLSimLogarithmic-NZ-01.tst
+FLSimGeometric-NZ-01.tst
+FLSimGenLogistic-NZ-01.tst
+
+Netezza-Base-PDF/FLPDFNormal-NZ-01.tst
+FLTriDiagStr-NZ-01.tst
+FLAbs-NZ-01.tst
+
 36.FLCleanStr-NZ-01.tst
 37.FLConcatStr-NZ-01.tst
 38.FLDLevenshteinDist-NZ-01.tst
@@ -127,6 +100,8 @@ Files tested:
 46.FLLastValue-NZ-01.tst
 47.FLRegExp_Like-NZ-01.tst
 48.FLStrTok-NZ-01.tst
+48a.FLStrReplace
+
 49.FLInvCDFBeta-NZ-01.tst
 50.FLInvCDFBradford-NZ-01.tst
 51.FLInvCDFBurr-NZ-01.tst

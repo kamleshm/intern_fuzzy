@@ -27,13 +27,13 @@
 --
 --	Return value:			FLOAT
 --
---	Last Updated:			05-03-2017
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Diptesh Nath
+--	Author:			    	Diptesh Nath,Kamlesh Meena
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -54,7 +54,7 @@ SELECT a.Country,b.Country,FLModEuclideanDist(a.Consumption, b.Consumption,-100)
 FROM tblProteinConsump a,tblProteinConsump b WHERE b.ProteinCode = a.ProteinCode AND b.CountryCode <> a.CountryCode
 GROUP BY a.Country, b.Country ORDER BY 1,2 LIMIT 100;
 
----- Positive Test 2: Returns expected result
+---- Positive Test 3: Returns expected result
 --- Return expected results, Good
 
 SELECT a.Country,b.Country,FLModEuclideanDist(a.Consumption, b.Consumption,null) AS FLModEuclideanDist
@@ -73,5 +73,6 @@ GROUP BY a.Country, b.Country ORDER BY 1,2 LIMIT 100;
 
 
 -- END: NEGATIVE TEST(s)
+\time
 
 -- 	END: TEST SCRIPT

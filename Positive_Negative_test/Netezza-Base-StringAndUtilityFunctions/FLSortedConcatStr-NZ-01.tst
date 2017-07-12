@@ -28,13 +28,13 @@
 --
 --	Return value:			VARCHAR
 --
---	Last Updated:			05-02-2017
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Diptesh Nath
+--	Author:			    	Diptesh Nath,Kamlesh Meena
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -65,15 +65,14 @@ SELECT FLSORTEDCONCATSTR('ABC,ACD,AS,a,f,F,f,w',',',null);
 -- BEGIN: NEGATIVE TEST(s)
 
 ---- Negative Test 1:Delimiter(2 nd parameter) not present.
-
-SELECT FLSORTEDCONCATSTR('ABC,ACD,AS,a,F,f,f,w','*','a
+SELECT FLSORTEDCONCATSTR('ABC,ACD,AS,a,F,f,f,w',null,'d');
 
 ---- Negative Test 2:3 rd parameter can be 'a', 'd' or null.
-
 SELECT FLSORTEDCONCATSTR('ABC,ACD,AS,a,F,f,f,w',',','s');
+--- Expected Error message "Arg #3 (Sort Flag) [S] must be either [A]sc, [D]esc or NULL."
 
 ---- Negative Test 3: More parameter given.
-
 SELECT FLSORTEDCONCATSTR('ABC,ACD,AS,a,F,f,f,w',',','s','abc');
+--- Expected Fuzzy Logix specific error message
 
 -- END: NEGATIVE TEST(s)

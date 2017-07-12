@@ -27,13 +27,13 @@
 --
 --	Return value:			INTEGER
 --
---	Last Updated:			05-02-2017
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Diptesh Nath
+--	Author:			    	Diptesh Nath,Kamlesh Meena
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -68,5 +68,5 @@ select flshufflewinstr(ClosePrice,null) over (partition by TickerId) from finsto
 
 
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

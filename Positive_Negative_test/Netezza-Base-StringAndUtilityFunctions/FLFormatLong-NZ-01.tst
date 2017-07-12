@@ -27,13 +27,13 @@
 --
 --	Return value:			VARCHAR
 --
---	Last Updated:			05-11-2017
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Diptesh Nath
+--	Author:			    	Diptesh Nath,Kamlesh Meena
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -81,3 +81,5 @@ SELECT flformatlong(10e308);
 SELECT flformatlong(10e-308);
 
 -- END: NEGATIVE TEST(s)
+\time
+-- END TEST SCRIPT

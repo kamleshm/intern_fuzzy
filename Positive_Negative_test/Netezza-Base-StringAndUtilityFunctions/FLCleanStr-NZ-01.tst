@@ -51,8 +51,14 @@ SELECT 	FLCleanStr('example6  #  È¿ïü .44 %(') AS CleanStr1,
 
 ---- Negative Test 1: Invalid Input
 --- Return expected results, Good
+---- Negative Test 1a
 SELECT FLCleanStr('');
+
+---- Negative Test 1b
 SELECT FLCleanStr(NULL);
+
+---- Negative Test 1c
+--- To be investigated
 SELECT FLCleanStr(1234);
 
 -- END: NEGATIVE TEST(s)

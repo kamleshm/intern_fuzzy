@@ -101,19 +101,26 @@ SELECT FLConcatStr(a.String1,'|','A') AS ConcatString
 FROM tblString a;
 
 ---- Negative Test 2: Invalid Input For Input String Column
+
+---- Negative Test 2a
 --- Return expected results, Good
 SELECT FLConcatStr('String1','|') AS ConcatString
 FROM    tblString;
 
+---- Negative Test 2b
+--- Return expected results, Good
 SELECT FLConcatStr('','|') AS ConcatString 
 FROM    tblString;
 
+---- Negative Test 2c
+--- Return expected results, Good
 SELECT FLConcatStr(NULL,'|') AS ConcatString
 FROM    tblString;
 
 
 ---- Negative Test 3: Invalid Input For Delimiter
 --- Return expected results, Good
+--- To be investigated
 SELECT FLConcatStr(String1,'') AS ConcatString 
 FROM    tblString;
 

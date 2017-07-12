@@ -35,8 +35,10 @@
 2.2 FLCount
 	1)---- Negative Test 2b: Invalid Data Type: Input VarChar ==> No error message received and the query executed successfully
 
-2.3 No script for FLCountIf: to be created
-
+2.3 FLCountIf: 
+	1)Negative Test 1: No data, SHould return 0 ===> returns null but 0 is expected
+	2)Negative Test 2b: Invalid Data Type: Input VarChar === > expected error but non-null output is returned
+	
 2.4 FLCountNeg
 	2)---- Negative Test 2b: Invalid Data Type: Input VarChar ===>No error message received and the query executed successfully
 
@@ -76,12 +78,11 @@
 	5)---- Negative Test 4: Value(Double Precision) out of range: Kurtosis of 1.0e-400 * Value ====> gives incorrect error message i.e " Float8 result is a NaN"	x
 
 2.1.15 FLMax
- 
 	2) Negative Test 1: No data ===> Non-Null value is returned i.e ( "0" )
 	3)Negative Test 2b: Invalid Data type: Input VarChar ==> No error message returned and query exits successfully
 	
 2.1.16 FLMedianWin
-	2)Negative Test 3: Value(Double Precision) out of range: Median of 1.0e-400 * Value ==> No error message returned and query exits successfully x
+	2)Negative Test 3: Value(Double Precision) out of range: Median of 1.0e-400 * Value ==> No error message returned and query exits successfully 	x
 	3)---- Negative Test 4: Invalid Data Type: Input Varchar
 		Query was edited to remove syntax error and also to match the testing purpose i.e (invalid data type)
 		But the quey runs without giving any error
@@ -92,7 +93,7 @@
 2.1.18 FLNTileWin x
 	None
 	
-2.1.19 FLPercWin 
+2.1.19 FLPercWin 	x
 	2)---- Positive Test 3: Positive test cases, Results should be 50.5, Compared with FLMedianWin()==> FLPercWin() argument was changed from 0.75 to 0.50 to match the testing purpose  x
 	3)---- Negative Test 3: Value(Double Precision) out of range: Percentile of 1.0e-400 * Value ===> No error message returned and query exits successfully  x
 	4)---- Negative Test 4: Invalid Data Type:Input Varchar ===> No error message returned and query exits successfully
@@ -150,7 +151,7 @@
 	4)---- Negative Test 5: Value(Double Precision) out of range: Weighted Standard Dev of 1.0e-400 * Value  ==> query ended without error in 5a and with error:"The sum of weights must be positive." in 5b. x
 	
 2.1.33 FLWtVar 
-	#2) ---- Positive Test 2: Weighted Variance of -1.0 * Value ===> Gives error "The sum of weights must be positive."
+	#2) ---- Positive Test 2: Weighted Variance of -1.0 * Value ===> Gives error "The sum of weights must be positive." 
 	#3)---- Negative Test 1: No data ===> gives error "The sum of weights must be positive." but NULL output is expected
 	#4)---- Negative Test 2: 0 weighting ===> gives error "The sum of weights must be positive." but NULL output is expected
 	#5)---- Negative Test 3: Sum(weightings) = 0; Sum(-1 , -2 , 3) =0  ===> gives error "The sum of weights must be positive." but NULL output is expected
@@ -174,7 +175,7 @@
 
 	
 4.4 FLExtractStr x
-	%1)Negative Test 2: Invalid (Null and Empty) Input for Parameters ===> no error message for "Null" x
+	1)Negative Test 2: Invalid (Null and Empty) Input for Parameters ===> no error message for "Null" x
 	2)No error message for query : "SELECT FLExtractStr('Home Depot|WAL-MART|DUANE|MARTHA|WALMART| DWAYNE|MARHTA|','|',5.3) AS ExtractPos5;" x
 	
 4.5 FLGetflat : No corresponding script found in TD
@@ -415,8 +416,7 @@
 10.3.1 FLCrossTab-TD-05.tst  : To be completed yet!! the query is as it is in TD and the test cases need to be seen
 
 10.4 SP_FLKSTest1S-TD-01.tst
-    syntax error were removed 
-	No comments on errors found
+    No comments
 	
 10.5 FLtTest1S
 	1)-- Case 4b,5c,5d: return value written in script was changed from 3.61217752509718E-261 to  5.7399657661151e-206, 5.4272742252909e-206
@@ -517,3 +517,32 @@
 	11.6.11 SP_LinRegrSWEff
 		
 		
+**************functions not in manual*******
+1.String functions
+	1.1flformatlong: gives error "Argument number out of range" for all positive test cases
+	
+2.Statistical
+	2.1 FLPercRank
+		i)---- Positive Test 5: Mix With Nulls==> time limit exceeded
+
+	2.2 FLMinAt ; 2.3 FLMaxAt 
+		No error message for :-
+		i)---- Negative Test 2: Invalid Data type:Input Non-Integer for 1st Argument
+		ii)---- Negative Test 3b: Invalid Data type: Input VarChar for 2nd Argument
+	
+	2.4 FLFracRank
+		i)Negative Test 7: Invalid Data Type(BIGINT): Non_Integer Freq ===> No error message received
+		
+	2.5 FLSparseCovarP
+		i)SELECT FLSparseCovarP(4, 3, 3, 5, 5, CAST(2 ** 63 -1 AS BIGINT)) AS FLSparseCovarP;  === > gives error "Floating point conversion to int8 is out of range" but runs in TD
+	
+	2.6 FLSimTransBeta
+		i)case 1h:SELECT a.SerialVal, FLSimTransBeta(a.RandVal, 1.0, 2.0, 1e-300, 5.0) AS FLSimTransBeta ==>gives error but runs in TD
+		ii)case 1.j,k,l ===> -do-
+		
+3. MAtrix
+	3.1 FLTriDiagStr
+	i) Case P5 and N1 takes very long time to run and does not give error as in TD
+
+4. Mathematical 
+	4.1

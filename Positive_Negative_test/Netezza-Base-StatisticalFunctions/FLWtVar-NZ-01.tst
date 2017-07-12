@@ -54,6 +54,7 @@ ORDER BY 1;
 
 ---- Positive Test 2: Weighted Variance of -1.0 * Value
 --- Return Null, Good
+--- To be investigated
 SELECT  a.City,
         FLWtVar(1, -1 * a.SalesPerVisit),
 		FLWtVar(-1, a.SalesPerVisit),
@@ -120,6 +121,7 @@ ORDER BY 1;
 
 ---- Negative Test 1: No data
 --- Output Null, Good
+--- To be investigated
 SELECT  FLWtVar(1, a.RandVal)
 FROM    fzzlSerial a
 WHERE   a.SerialVal <= -1;
@@ -130,11 +132,13 @@ WHERE   a.SerialVal <= -1;
 
 ---- Negative Test 2: 0 weighting
 --- Output Null, Good
+--- To be investigated
 SELECT  FLWtVar(0, a.RandVal)
 FROM    fzzlSerial a;
 
 ---- Negative Test 3: Sum(weightings) = 0; Sum(-1 , -2 , 3) =0
 --- Output Null, Good
+--- To be investigated
 SELECT FLWtVar(z.pWtVal, z.pSerialVal)
 FROM (
       SELECT a.SerialVal AS pSerialVal, CASE WHEN a.SerialVal <= 2 THEN -1*a.SerialVal ELSE a.SerialVal END AS pWtVal
@@ -157,13 +161,14 @@ GROUP BY a.City
 ORDER BY 1;
 
 ---- Negative Test 5: Value(Double Precision) out of range: Weighted Variance of 1.0e-400 * Value
---- Numeric Overflow error, Good 
+--- Returns 0 value, Good 
 SELECT  a.City,
         FLWtVar(1, 1e-400 * a.SalesPerVisit)
 FROM    tblCustData a
 GROUP BY a.City
 ORDER BY 1;
 
+--- To be investigated
 SELECT  a.City,
         FLWtVar(1e-400, a.SalesPerVisit)
 FROM    tblCustData a

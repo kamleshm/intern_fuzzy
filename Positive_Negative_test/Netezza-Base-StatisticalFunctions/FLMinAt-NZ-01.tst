@@ -26,13 +26,13 @@
 --
 --	Return value:			BIGINT
 --
---	Last Updated:			04-18-2017
+--	Last Updated:			07-11-2017
 --
 --	Author:			    	<Zhi.Wang@fuzzyl.com>
---  Author:					<Diptesh.Nath@fuzzylogix.com>
+--  Author:				<Diptesh.Nath@fuzzylogix.com>
 
 -- BEGIN: TEST SCRIPT
-
+\time
 -- .run file=../PulsarLogOn.sql
 
 -- .set width 2500
@@ -97,7 +97,7 @@ WHERE   a.SerialVal <= 10;
 -- BEGIN: NEGATIVE TEST(s)
 
 ---- Negative Test 1: No data
---- Output Null, Good
+--- Output 0 value, Good
 SELECT  FLMinAt(a.SerialVal, a.RandVal),
         COUNT(*)
 FROM    fzzlSerial a
@@ -117,11 +117,11 @@ FROM    tblCustData a;
 
 ---- Negative Test 3b: Invalid Data type: Input VarChar for 2nd Argument
 --- Return expected error, Good
-SELECT  FLMinAt(a.ObsID, CAST (a.RandVal AS VARCHAR(30))),
+SELECT  FLMinAt(a.SerialVal, CAST (a.RandVal AS VARCHAR(30))),
         COUNT(*)
 FROM    fzzlSerial a
 WHERE   a.SerialVal <= 10;
 
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

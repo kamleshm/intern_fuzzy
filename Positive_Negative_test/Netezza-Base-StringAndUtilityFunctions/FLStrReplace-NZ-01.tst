@@ -49,10 +49,16 @@ SELECT FLStrReplace('OneTwoThreeFour', 'Three', 'TwoAndHalf');
 
 -- Positive test 2: Empty strings or NULL values
 -- Expected result: good
+-- Positive test 2a
 SELECT FLStrReplace('', 'Three', 'TwoAndHalf');
+-- Positive test 2b
+--- To be investigated
 SELECT FLStrReplace('OneTwoThreeFour', '', 'TwoAndHalf');
+-- Positive test 2c
 SELECT FLStrReplace('OneTwoThreeFour', 'Three', '');
+-- Positive test 2d
 SELECT FLStrReplace(NULL, 'Three', 'TwoAndHalf');
+-- Positive test 2e
 SELECT FLStrReplace('OneTwoThreeFour', 'Three', NULL);
 
 ---- Positive Test 3: Case Sensitivity

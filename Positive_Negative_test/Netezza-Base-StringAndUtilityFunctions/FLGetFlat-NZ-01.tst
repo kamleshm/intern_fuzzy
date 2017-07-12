@@ -51,6 +51,8 @@ SELECT FLGetFlat(2,'one','two','three','four','five','six',
 -- Expected result: good
 SELECT FLGetFlat(1,'one','two','three','four','five','six',
 'seven','eight','nine','ten','eleven','twelve');
+
+--- To be investigated
 SELECT FLGetFlat(12,'one','two','three','four','five','six',
 'seven','eight','nine','ten','eleven','twelve');
 
@@ -58,12 +60,14 @@ SELECT FLGetFlat(12,'one','two','three','four','five','six',
 -- BEGIN: NEGATIVE TEST(s)
 
 -- Negative test 1: out of bounds
+--- To be investigated
 SELECT FLGetFlat(0,'one','two','three','four','five','six',
 'seven','eight','nine','ten','eleven','twelve');
 SELECT FLGetFlat(13,'one','two','three','four','five','six',
 'seven','eight','nine','ten','eleven','twelve');
 
 -- Negative test 2: invalid data types
+--- To be investigated
 SELECT FLGetFlat(1.2,'one','two','three','four','five','six',
 'seven','eight','nine','ten','eleven','twelve');
 SELECT FLGetFlat(NULL,'one','two','three','four','five','six',

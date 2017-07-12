@@ -28,13 +28,13 @@
 --
 --	Return value:		    DOUBLE PRECISION
 --
---	Last Updated:		    12-26-2014
+--	Last Updated:		    07-11-2017
 --
---	Author:			    <Zhi.Wang@fuzzyl.com, Joydeep.Das@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>
+--	Author:			    <Zhi.Wang@fuzzyl.com, Joydeep.Das@fuzzyl.com>, <Anurag.Reddy@fuzzyl.com>, <Kamlesh.Meena@fuzzylogix.com>
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 -- BEGIN: POSITIVE TEST(s)
@@ -55,10 +55,10 @@ FROM fzzlConstantSerial a
 WHERE a.SerialVal <= 5
 ORDER BY 1;    
 
--- Expected failure due to Netezza system limitation below 1e-307
+-- Expected failure due to Netezza system limitation below 1e-320
 --	Case 1c:
 SELECT a.SerialVal,
-	FLSimNegBinomial(a.RandVal, 1e-310, 10) AS FLSimNegBinomial
+	FLSimNegBinomial(a.RandVal, 1e-325, 10) AS FLSimNegBinomial
 FROM fzzlConstantSerial a
 WHERE a.SerialVal <= 5
 ORDER BY 1;    
@@ -169,5 +169,5 @@ WHERE a.SerialVal <= 5
 ORDER BY 1;        
     
 -- END: NEGATIVE TEST(s)
-
+\time
 -- 	END: TEST SCRIPT

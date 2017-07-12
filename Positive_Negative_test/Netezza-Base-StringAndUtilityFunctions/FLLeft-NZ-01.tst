@@ -28,13 +28,13 @@
 --
 --	Return value:			VARCHAR
 --
---	Last Updated:			04-28-2017
+--	Last Updated:			07-11-2017
 --
---	Author:			    	Diptesh Nath
+--	Author:			    	Diptesh Nath,Kamlesh Meena
 --
 
 -- BEGIN: TEST SCRIPT
-
+\time
 --.run file=../PulsarLogOn.sql
 
 --.set width 2500
@@ -74,3 +74,5 @@ Select FLLEFT('ABCDEFGH',10e-308);
 Select FLLEFT(123xz45,2);
 
 -- END: NEGATIVE TEST(s)
+\time
+-- END TEST SCRIPT
